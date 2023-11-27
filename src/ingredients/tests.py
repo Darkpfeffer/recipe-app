@@ -46,11 +46,7 @@ class IngredientModelTest(TestCase):
 
         test_recipe.ingredients.set(test_ingredient_query)
 
-        test_recipe.save()
-
         test_ingredient.recipe_appearance.add(test_recipe)
-
-        test_ingredient.save()
 
     def test_ingredient_name(self):
         ingredient = Ingredient.objects.get(id = 1)

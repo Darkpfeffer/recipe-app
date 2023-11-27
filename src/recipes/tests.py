@@ -1,11 +1,19 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import Recipe
-from .models import User
+from users.models import User
+from ingredients.models import Ingredient
 
 # Create your tests here.
 class RecipeModelTest(TestCase):
     def setUpTestData():
+        Ingredient.objects.create(
+            name = "salt",
+            supplier = "Someone",
+            price = 0.50,
+            ingredient_unit_type = "kilogram"
+        )
+
         user= get_user_model().objects.create_user(
             username = 'testuser', password='secret'
         )
@@ -18,18 +26,27 @@ class RecipeModelTest(TestCase):
         )
 
         test_user = User.objects.get(id=1)
+
+        test_ingredient_query = Ingredient.objects.filter(id=1)
+
+        test_ingredient = Ingredient.objects.get(id=1)
         
         Recipe.objects.create(
             name = "Hot Dog",
             cooking_time = "5",
-            ingredients = "Hot Dog Bun, Sausage, Ketchup, "+ 
-            "Mayonnaise, Roasted Onions",
             ingredient_quantities = ((100, 'gram'), (50, 'gram'),\
                                       (20, 'milliliter'), (20, 'milliliter'), \
                                         (10, 'gram')),
             difficulty = "Intermediate",
+            recipe_cost = 25.03,
             creator_id = test_user
         )
+
+        test_recipe = Recipe.objects.get(id=1)
+
+        test_recipe.ingredients.set(test_ingredient_query)
+
+        test_ingredient.recipe_appearance.add(test_recipe)
 
     def test_recipe_name(self):
         recipe = Recipe.objects.get(id = 1)
@@ -52,7 +69,7 @@ class RecipeModelTest(TestCase):
 
         self.assertEqual(field_label, 'ingredients')
 
-    def test_recipe_ingredients(self):
+    def test_recipe_ingredient_quantities(self):
         recipe = Recipe.objects.get(id = 1)
 
         field_label = recipe._meta.get_field('ingredient_quantities').verbose_name
@@ -65,6 +82,13 @@ class RecipeModelTest(TestCase):
         field_label = recipe._meta.get_field('difficulty').verbose_name
 
         self.assertEqual(field_label, 'difficulty')
+
+    def test_recipe_recipe_cost(self):
+        recipe = Recipe.objects.get(id = 1)
+
+        field_label = recipe._meta.get_field('recipe_cost').verbose_name
+
+        self.assertEqual(field_label, 'recipe cost')
 
     def test_recipe_creator_id(self):
         recipe = Recipe.objects.get(id = 1)
