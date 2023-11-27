@@ -1,9 +1,24 @@
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 from .models import Recipe
+from .models import User
 
 # Create your tests here.
 class RecipeModelTest(TestCase):
     def setUpTestData():
+        user= get_user_model().objects.create_user(
+            username = 'testuser', password='secret'
+        )
+
+        User.objects.create(
+            username = user,
+            name = "Erik Vasquez",
+            email = "vasquez@example.com",
+            birthday = "1212-12-12"
+        )
+
+        test_user = User.objects.get(id=1)
+        
         Recipe.objects.create(
             name = "Hot Dog",
             cooking_time = "5",
@@ -13,7 +28,7 @@ class RecipeModelTest(TestCase):
                                       (20, 'milliliter'), (20, 'milliliter'), \
                                         (10, 'gram')),
             difficulty = "Intermediate",
-            creator_id = 212
+            creator_id = test_user
         )
 
     def test_recipe_name(self):
