@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import User
 from recipes.models import Recipe
+from ingredients.models import Ingredient
 
 # Create your tests here.
 class UserModelTest(TestCase):
@@ -19,10 +20,16 @@ class UserModelTest(TestCase):
 
         user_object = User.objects.get(id=1)
 
+        Ingredient.objects.create(
+            name = "salt",
+            supplier = "Someone",
+            price = 0.50,
+            ingredient_unit_type = "kilogram"
+        )
+
         Recipe.objects.create(
             name = 'Test recipe',
             cooking_time = 5,
-            ingredients = 'asd, sda, dsa',
             ingredient_quantities = ((100, 'gram'), (50, 'gram'), 
                                      (20, 'milliliter')),
             difficulty = "Intermediate",
@@ -32,16 +39,21 @@ class UserModelTest(TestCase):
         Recipe.objects.create(
             name = 'Test recipe2',
             cooking_time = 5,
-            ingredients = 'asd, sda, dsa',
             ingredient_quantities = ((100, 'gram'), (50, 'gram'), 
                                      (20, 'milliliter')),
             difficulty = "Intermediate",
             creator_id = user_object
         )
 
+        ingredient_object_query = Ingredient.objects.filter(id=1)
+
         recipe_object = Recipe.objects.get(id=1)
 
         recipe_object2 = Recipe.objects.get(id=2)
+
+        recipe_object.ingredients.set(ingredient_object_query)
+
+        recipe_object2.ingredients.set(ingredient_object_query)
 
         user_object.favorite_recipes.add(recipe_object, recipe_object2)
 
