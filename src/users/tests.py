@@ -22,7 +22,6 @@ class UserModelTest(TestCase):
 
         Ingredient.objects.create(
             name = "salt",
-            supplier = "Someone",
             price = 0.50,
             ingredient_unit_type = "kilogram"
         )

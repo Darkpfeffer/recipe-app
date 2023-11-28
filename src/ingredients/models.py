@@ -9,8 +9,9 @@ price_unit_choices = (
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=120)
-    supplier = models.CharField(max_length=120, blank=True, null=True)
-    price = models.FloatField(help_text='The value is in dollar')
+    price = models.FloatField(help_text='The value is in dollar. '+\
+                              'Add the average price of the ingredient. ' +\
+                                'Measures are in "kilogram" and "liter".')
     ingredient_unit_type = models.CharField(
         choices=price_unit_choices, 
         default='kilogram', 
@@ -19,6 +20,7 @@ class Ingredient(models.Model):
         'recipes.Recipe', 
         blank=True
     )
+    pic = models.ImageField(upload_to='ingredients', default='no_picture.jpg')
 
     def __str__(self):
         return f"id = {self.id}, name = {self.name}"

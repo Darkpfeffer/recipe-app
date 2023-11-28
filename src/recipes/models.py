@@ -23,6 +23,7 @@ class Recipe(models.Model):
     difficulty = models.CharField(max_length=12, blank=True, null=True)
     recipe_cost = models.FloatField(blank=True, null=True)
     creator_id = models.ForeignKey('users.User', on_delete=models.PROTECT)
+    pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
 
     def __str__(self):
         return f"{self.name}, Difficulty: {self.difficulty}, "+\

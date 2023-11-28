@@ -9,7 +9,6 @@ class RecipeModelTest(TestCase):
     def setUpTestData():
         Ingredient.objects.create(
             name = "salt",
-            supplier = "Someone",
             price = 0.50,
             ingredient_unit_type = "kilogram"
         )

@@ -15,6 +15,10 @@ class User(models.Model):
         'recipes.Recipe',
         blank=True
     )
+    profile_pic = models.ImageField(
+        upload_to='users', 
+        default='no_picture.jpg'
+    )
 
     def __str__(self):
         return f"Username: {self.username}, ID: {self.id}"
