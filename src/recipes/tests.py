@@ -38,7 +38,9 @@ class RecipeModelTest(TestCase):
                                         (10, 'gram')),
             difficulty = "Intermediate",
             recipe_cost = 25.03,
-            creator_id = test_user
+            creator_id = test_user,
+            recipe_directions = "lorem ipsum",
+            pic='no_picture.jpg'
         )
 
         test_recipe = Recipe.objects.get(id=1)
@@ -95,3 +97,17 @@ class RecipeModelTest(TestCase):
         field_label = recipe._meta.get_field('creator_id').verbose_name
 
         self.assertEqual(field_label, 'creator id')
+
+    def test_recipe_recipe_directions(self):
+        recipe = Recipe.objects.get(id = 1)
+
+        field_label = recipe._meta.get_field('recipe_directions').verbose_name
+
+        self.assertEqual(field_label, 'recipe directions')
+
+    def test_recipe_pic(self):
+        recipe = Recipe.objects.get(id = 1)
+
+        field_label = recipe._meta.get_field('pic').verbose_name
+
+        self.assertEqual(field_label, 'pic')

@@ -15,7 +15,8 @@ class UserModelTest(TestCase):
             username = user,
             name = "Erik Vasquez",
             email = "vasquez@example.com",
-            birthday = "1212-12-12"
+            birthday = "1212-12-12",
+            profile_pic = 'no_picture.jpg'
         )
 
         user_object = User.objects.get(id=1)
@@ -90,3 +91,10 @@ class UserModelTest(TestCase):
         field_label = user._meta.get_field('favorite_recipes').verbose_name
 
         self.assertEqual(field_label, 'favorite recipes')
+
+    def test_user_profile_pic(self):
+        user = User.objects.get(id = 1)
+
+        field_label = user._meta.get_field('profile_pic').verbose_name
+
+        self.assertEqual(field_label, 'profile pic')

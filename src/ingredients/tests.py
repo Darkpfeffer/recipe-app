@@ -11,7 +11,8 @@ class IngredientModelTest(TestCase):
         Ingredient.objects.create(
             name = "salt",
             price = 0.50,
-            ingredient_unit_type = "kilogram"
+            ingredient_unit_type = "kilogram",
+            pic = 'no_picture.jpg'
         )
 
         user= get_user_model().objects.create_user(
@@ -74,3 +75,10 @@ class IngredientModelTest(TestCase):
         field_label = ingredient._meta.get_field('recipe_appearance').verbose_name
 
         self.assertEqual(field_label, 'recipe appearance')
+
+    def test_ingredient_pic(self):
+        ingredient = Ingredient.objects.get(id = 1)
+
+        field_label = ingredient._meta.get_field('pic').verbose_name
+
+        self.assertEqual(field_label, 'pic')
