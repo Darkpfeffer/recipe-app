@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 import recipes.models
 
 # Create your models here.
@@ -24,3 +25,6 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return f"id = {self.id}, name = {self.name}"
+    
+    def get_absolute_url(self):
+        return reverse('ingredients:ingredient_detail', kwargs={'pk': self.pk})

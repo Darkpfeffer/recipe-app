@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 import users.models
 import ingredients.models
 
@@ -29,3 +30,6 @@ class Recipe(models.Model):
     def __str__(self):
         return f"{self.name}, Difficulty: {self.difficulty}, "+\
             f"Cooking time (in minutes): {self.cooking_time}"
+
+    def get_absolute_url(self):
+        return reverse('recipes:recipe_detail', kwargs={'pk': self.pk})
