@@ -35,7 +35,7 @@
     }
 }
 
-@media all and (width < 790px) {
+@media all and (width < 970px) {
     .homepage-search {
         background-size: 98vw 60vw;
         height: 40vw;

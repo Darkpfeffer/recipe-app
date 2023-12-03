@@ -24,6 +24,14 @@ header {
     background-image: linear-gradient(#ff9f94, #d42b2b);
 }
 
+.desktop {
+    display: flex;
+}
+
+.mobile {
+    display: none;
+}
+
 .header-content {
     display: inherit;
     flex-direction: row;
@@ -37,6 +45,17 @@ header {
 .header-icon {
     width: 5em;
     margin-left: 0.3em;
+    margin-right: 0.5em;
+}
+
+.header__logo--name {
+    display: flex;
+    flex-direction: row;
+}
+
+.header__logo--name a, .header-menu a {
+    text-decoration: none;
+    color: black;
 }
 
 .searchbar-container {
@@ -72,19 +91,55 @@ header {
     }
 }
 
-@media all and (max-width: 790px) {
-    div {
-        font-size: 20px;
-    }
-}
-
-@media all and (max-width: 580px) {
+@media all and (max-width: 970px) {
     div {
         font-size: 16px;
     }
 
     .searchbar {
         height: 1.5em
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: flex;
+    }
+
+    .header-mobile {
+        overflow: visible;
+        position: relative;
+    }
+
+    /* Hide the links inside the hamburger menu */
+    .header-mobile #myLinks {
+        display: none;
+        position: absolute;
+        flex-direction: column;
+        align-items: end;
+        right: 0;
+        top: 3.5em;
+        background-image: linear-gradient(#d42b2b, #ff9f94);
+        padding: 1em;
+        padding-top: 0em;
+    }
+
+    .header-mobile a {
+        display: block;
+    }
+
+    .header-mobile a {
+        color: black;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 1em;
+        display: block;
+      }
+
+    .header-mobile a.icon {
+        display: flex;
     }
 }
 
@@ -94,12 +149,6 @@ header {
     }
 
     .searchbar {
-        height: 1em
-    }
-}
-
-@media all and (max-width: 480px) {
-    .searchbar {
-        width: 7em;
+        height: 1em;
     }
 }

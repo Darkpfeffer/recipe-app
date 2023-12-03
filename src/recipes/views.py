@@ -4,7 +4,7 @@ from .models import Recipe
 
 # Create your views here.
 def home(request):
-    return render(request, "recipes/recipes_home.html")
+    return render(request, "recipes/home.html")
 
 class RecipeListView(ListView):
     model = Recipe

@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{object.name}} Detail - Recipe App</title>
+        <title>Recipe app - Homepage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" contect="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../../../media/favicon.png">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
-        <link href="../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
-        <link href="../../static/css/recipes_detail.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
+        <link href="static/css/recipes_home.css" type="text/css" rel="stylesheet">
     </head>
     <body>
         <header>
             <div class="header-content">
                 <div class="header__logo--name">
-                    <a href="../../">
+                    <a href="">
                         <img 
-                            src="../../../media/app-icon.png" 
+                            src="media/app-icon.png" 
                             rel="app icon" 
                             class="header-icon"
                         >
                     </a>
-                    <a href="../../">
+                    <a href="">
                         <h3>Recipe app</h3>
                     </a>
                 </div>
                 <div class="desktop">
                     <div class="header-menu">
-                        <a href="../../recipes/list/">Recipes</a>
-                        <a href="../../ingredients/list/">Ingredients</a>
+                        <a href="recipes/list/">Recipes</a>
+                        <a href="ingredients/list/">Ingredients</a>
                     </div>
                 </div>
                 <div class="searchbar-container header-searchbar desktop">
                     <img 
-                        src="../../../media/magnifying_glass.png" 
+                        src="media/magnifying_glass.png" 
                         class="magnifying-glass"
                     >
                     <input 
@@ -44,11 +47,11 @@
                 <!-- mobile view -->
                 <div class="mobile header-mobile">
                     <div id="myLinks">
-                      <a href="../../recipes/list/">Recipes</a>
-                      <a href="../../ingredients/list/">Ingredients</a>
+                      <a href="recipes/list/">Recipes</a>
+                      <a href="ingredients/list/">Ingredients</a>
                       <div class="searchbar-container header-searchbar">
                         <img 
-                            src="../../../media/magnifying_glass.png" 
+                            src="media/magnifying_glass.png" 
                             class="magnifying-glass"
                         >
                         <input 
@@ -60,21 +63,29 @@
                     </div>
                     <!-- Hamburger menu to toggle the navigation links -->
                     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                        <i class="fa fa-bars"></i>
+                      <i class="fa fa-bars"></i>
                     </a>
                   </div>
             </div>  
         </header>
-        <div>
-            <h2>Details: {{object.name}}</h2>
-            <img src="{{object.pic.url}}" class="recipe-pic__detail"><br>
-            <b>Name: </b> {{object.name}}<br>
-            <b>Price: </b> {{object.price}}<span>$/</span>{{object.ingredient_unit_type}}<br>
-            <b>Present in recipes: </b><br>
-            {% for recipe in object.recipe_appearance.all %}
-                <b>- </b> <a href="/recipes/list/{{recipe.id}}">{{recipe.name}}</a><br>
-            {% endfor %}
+        <div class="homepage-content">
+            <div class="homepage-search"> 
+                <div class="searchbar-container">
+                    <img src="media/magnifying_glass.png" class="magnifying-glass">
+                    <input 
+                        id="homepage-input"
+                        class="searchbar homepage-searchbar" 
+                        placeholder="Search for a recipe or ingredient"
+                    >
+                </div>
+            </div>
+            <div>
+
+            </div>
         </div>
+        <footer>
+
+        </footer>
         <script> 
             function myFunction() {
                 let x = document.getElementById("myLinks");
@@ -83,7 +94,7 @@
                 } else {
                 x.style.display = "flex";
                 }
-            } 
+            }
         </script>
     </body>
 </html>

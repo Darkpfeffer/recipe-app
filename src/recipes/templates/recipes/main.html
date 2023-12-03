@@ -2,27 +2,96 @@
 <html>
     <head>
         <title>Recipe List - Recipe App</title><meta charset="UTF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" contect="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../../../media/favicon.png">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
-        <link href="../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
-        <link href="../../static/css/recipes_list.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="../../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
+        <link href="../../../static/css/recipes_list.css" type="text/css" rel="stylesheet">
     </head>
     <body> 
-        <h1>Recipes' list</h1>
-        <table border="1" cellpadding="5" cellspacing="5">
-            <tr>
-                <td>Recipe's name</td>
-                <td>Recipe's image</td>   
-                {% for object in object_list %}
-                    <tr>
-                        <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td>
-                        <td><img src="{{object.pic.url}}" class="recipe-image"></td>
-                    </tr>
-                {% endfor %}
-            </tr>
-        </table>
+        <header>
+            <div class="header-content">
+                <div class="header__logo--name">
+                    <a href="../../">
+                        <img 
+                            src="../../../media/app-icon.png" 
+                            rel="app icon" 
+                            class="header-icon"
+                        >
+                    </a>
+                    <a href="../../">
+                        <h3>Recipe app</h3>
+                    </a>
+                </div>
+                <div class="desktop">
+                    <div class="header-menu">
+                        <a href="../../recipes/list/">Recipes</a>
+                        <a href="../../ingredients/list/">Ingredients</a>
+                    </div>
+                </div>
+                <div class="searchbar-container header-searchbar desktop">
+                    <img 
+                        src="../../../media/magnifying_glass.png" 
+                        class="magnifying-glass"
+                    >
+                    <input 
+                        id="header-input"
+                        class="searchbar"
+                        placeholder="Search for a recipe or ingredient"
+                    > 
+                </div>
+                <!-- mobile view -->
+                <div class="mobile header-mobile">
+                    <div id="myLinks">
+                      <a href="../../recipes/list/">Recipes</a>
+                      <a href="../../ingredients/list/">Ingredients</a>
+                      <div class="searchbar-container header-searchbar">
+                        <img 
+                            src="../../../media/magnifying_glass.png" 
+                            class="magnifying-glass"
+                        >
+                        <input 
+                            id="header-input__mobile"
+                            class="searchbar"
+                            placeholder="Search for a recipe or ingredient"
+                        > 
+                    </div>
+                    </div>
+                    <!-- Hamburger menu to toggle the navigation links -->
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                      <i class="fa fa-bars"></i>
+                    </a>
+                  </div>
+            </div>  
+        </header>
+        <div>
+            <h1>Recipes' list</h1>
+            <table border="1" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td>Recipe's name</td>
+                    <td>Recipe's image</td>   
+                    {% for object in object_list %}
+                        <tr>
+                            <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td>
+                            <td><img src="{{object.pic.url}}" class="recipe-image"></td>
+                        </tr>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
+        <script> 
+            function myFunction() {
+                let x = document.getElementById("myLinks");
+                if (x.style.display === "flex") {
+                x.style.display = "none";
+                } else {
+                x.style.display = "flex";
+                }
+            }
+        </script>
     </body>
 </html>
