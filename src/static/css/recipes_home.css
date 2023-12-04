@@ -1,6 +1,6 @@
 .homepage-content {
     display: flex;
-    margin-top: 2em;
+    margin-top: 6em;
     justify-content: center;
     align-items: center;
 }
@@ -22,7 +22,7 @@
     width: 30vw;
 }
 
-@media all and (width > 1920px) {
+@media all and (min-width: 1920px) {
     .homepage-search {
         background-size: 941px 576px;
         height: 384px;
@@ -35,7 +35,7 @@
     }
 }
 
-@media all and (width < 970px) {
+@media all and (max-width: 970px) {
     .homepage-search {
         background-size: 98vw 60vw;
         height: 40vw;

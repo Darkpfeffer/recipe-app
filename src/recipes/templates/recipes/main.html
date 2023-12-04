@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="../../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
-        <link href="../../../static/css/recipes_list.css" type="text/css" rel="stylesheet">
+        <link href="../../../static/css/general_list.css" type="text/css" rel="stylesheet">
     </head>
     <body> 
         <header>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="desktop">
                     <div class="header-menu">
-                        <a href="../../recipes/list/">Recipes</a>
+                        <a href="../../recipes/list/" class="active">Recipes</a>
                         <a href="../../ingredients/list/">Ingredients</a>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <!-- mobile view -->
                 <div class="mobile header-mobile">
                     <div id="myLinks">
-                      <a href="../../recipes/list/">Recipes</a>
+                      <a href="../../recipes/list/" class="active">Recipes</a>
                       <a href="../../ingredients/list/">Ingredients</a>
                       <div class="searchbar-container header-searchbar">
                         <img 
@@ -68,30 +68,22 @@
                   </div>
             </div>  
         </header>
-        <div>
-            <h1>Recipes' list</h1>
-            <table border="1" cellpadding="5" cellspacing="5">
-                <tr>
-                    <td>Recipe's name</td>
-                    <td>Recipe's image</td>   
-                    {% for object in object_list %}
-                        <tr>
-                            <td><a href="{{object.get_absolute_url}}">{{object.name}}</a></td>
-                            <td><img src="{{object.pic.url}}" class="recipe-image"></td>
-                        </tr>
-                    {% endfor %}
-                </tr>
-            </table>
+        <div class="main__list">
+            <h1>Recipes</h1>
+            <div class="grid-container">
+                        {% for object in object_list %}
+                            <div class="grid-item">
+                                <a 
+                                    href="{{object.get_absolute_url}}" 
+                                    class="grid-title"
+                                >
+                                    <img src="{{object.pic.url}}" class="recipe-image">
+                                    <p>{{object.name}}</p>
+                                </a>
+                            </div>
+                        {% endfor %}
+            </div>
         </div>
-        <script> 
-            function myFunction() {
-                let x = document.getElementById("myLinks");
-                if (x.style.display === "flex") {
-                x.style.display = "none";
-                } else {
-                x.style.display = "flex";
-                }
-            }
-        </script>
+        <script src="../../../static/js/general.js"></script>
     </body>
 </html>
