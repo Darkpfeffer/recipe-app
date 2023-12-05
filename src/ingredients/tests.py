@@ -82,3 +82,8 @@ class IngredientModelTest(TestCase):
         field_label = ingredient._meta.get_field('pic').verbose_name
 
         self.assertEqual(field_label, 'pic')
+
+    def test_get_absolute_url(self):
+        ingredient = Ingredient.objects.get(id = 1)
+
+        self.assertEqual(ingredient.get_absolute_url(), '/ingredients/list/1')
