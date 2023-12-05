@@ -1,8 +1,9 @@
 function myFunction() {
-    let x = document.getElementById("myLinks");
-    if (x.style.display === "flex") {
-    x.style.display = "none";
+    let haburgerMenu = document.getElementById("myLinks");
+    
+    if (haburgerMenu.style.display === "flex") {
+        haburgerMenu.style.display = "none";
     } else {
-    x.style.display = "flex";
+        haburgerMenu.style.display = "flex";
     }
 }

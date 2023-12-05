@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="../../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
-        <link href="../../static/css/recipes_detail.css" type="text/css" rel="stylesheet">
+        <link href="../../static/css/general_detail.css" type="text/css" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -68,15 +68,29 @@
                   </div>
             </div>  
         </header>
-        <div>
-            <h2>Details: {{object.name}}</h2>
-            <img src="{{object.pic.url}}" class="recipe-pic__detail"><br>
-            <b>Name: </b> {{object.name}}<br>
-            <b>Price: </b> {{object.price}}<span>$/</span>{{object.ingredient_unit_type}}<br>
-            <b>Present in recipes: </b><br>
-            {% for recipe in object.recipe_appearance.all %}
-                <b>- </b> <a href="/recipes/list/{{recipe.id}}">{{recipe.name}}</a><br>
-            {% endfor %}
+        <div class="all-details">
+            <div class="details ingredient-details">
+                <h3 class="details__item">Details: {{object.name}}</h3>
+                <img src="{{object.pic.url}}" class="details__item details__pic"><br>
+                <p class="details__item">
+                    <span class="attribute-name">
+                        Name:  
+                    </span>
+                    {{object.name}}
+                </p>
+                <p class="details__item">
+                    <span class="attribute-name">
+                        Price: 
+                    </span>
+                    {{object.price}}<span>$/</span>{{object.ingredient_unit_type}}
+                </p>
+                <p class="details__item attribute-name">
+                    Present in recipes: 
+                </p>
+                {% for recipe in object.recipe_appearance.all %}
+                    <a href="/recipes/list/{{recipe.id}}" class="recipe-presence">{{recipe.name}}</a>
+                {% endfor %}
+            </div>
         </div>
         <script src="../../../static/js/general.js"></script>
     </body>

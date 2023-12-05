@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="../../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
-        <link href="../../../static/css/recipes_detail.css" type="text/css" rel="stylesheet">
+        <link href="../../../static/css/general_detail.css" type="text/css" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -68,24 +68,52 @@
                   </div>
             </div>  
         </header>
-        <div>
-            <h2>Details: {{object.name}}</h2>
-            <img src="{{object.pic.url}}" class="recipe-pic__detail"><br>
-            <b>Name: </b> {{object.name}}<br>
-            <b>Cooking time: </b> {{object.cooking_time}} <span> minutes</span><br>
-            <b>Difficulty: </b> {{object.difficulty}} <br>
-            <b>Creator: </b>{{object.creator_id.username}}<br>
-            <b>Ingredients: </b><br>        
-            {% for ingredient in object.ingredients.all %}
-                <b>- </b><a 
-                    href="/ingredients/list/{{ingredient.id}}"
-                    >
-                        {{ingredient.name}}
-                    </a><br>
-            {% endfor %}
-            <br>
-            <b>Directions: </b><br>
-            {{object.recipe_directions}}<br>
+        <div class="all-details">
+            <div class="details">
+                <div class="details__container">
+                    <h3 class="details__item">Details: {{object.name}}</h3>
+                    <img src="{{object.pic.url}}" class="details__item details__pic">
+                    <p class="details__item">
+                        <span class="attribute-name">
+                            Name:  
+                        </span>
+                        {{object.name}}
+                    </p>
+                    <p class="details__item"> 
+                        <span class="attribute-name">
+                            Cooking time: 
+                        </span>{{object.cooking_time}} minutes
+                    </p>
+                    <p class="details__item">
+                        <span class="attribute-name">
+                            Difficulty: 
+                        </span>
+                        {{object.calculate_difficulty}}
+                    </p>
+                    <p class="details__item">
+                        <span class="attribute-name">
+                            Creator: 
+                        </span>
+                        {{object.creator_id.username}}
+                    </p>
+                    <p class="details__item">
+                        <span class="attribute-name">
+                            Directions:
+                        </span><br>
+                        {{object.recipe_directions}}
+                    </p>
+                </div>
+            </div>
+            <div class="ingredients">
+                <p class="details__item">Ingredients: </p>       
+                    {% for ingredient in object.ingredients.all %}
+                        <a 
+                            href="/ingredients/list/{{ingredient.id}}"
+                            >
+                                {{ingredient.name}}
+                        </a>
+                    {% endfor %}
+            </div>
         </div>
     </body>
     <script src="../../../static/js/general.js"></script>

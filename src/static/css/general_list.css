@@ -3,13 +3,6 @@
     height: 12em;
 }
 
-.main__list {
-    margin-top: 6em;
-    width: 75vw;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 /* Grid start */
 .grid-container {
     display: grid;
@@ -45,7 +38,7 @@
 }
 
 @media all and (max-width: 970px) {
-    .recipe-main__content {
+    .main__list {
         width: 98vw;
     }
 }

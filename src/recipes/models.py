@@ -33,3 +33,18 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipes:recipe_detail', kwargs={'pk': self.pk})
+    
+    def calculate_difficulty(self):
+        short_cooking_time = int(self.cooking_time) < 10
+        long_cooking_time = int(self.cooking_time) >= 10
+        few_ingredients = self.ingredients.count() < 4    
+        numerous_ingredients = self.ingredients.count() >= 4
+
+        if short_cooking_time and few_ingredients:
+            return "Easy"
+        elif short_cooking_time and numerous_ingredients:
+            return "Medium"
+        elif long_cooking_time and few_ingredients:
+            return "Intermediate"
+        elif long_cooking_time and numerous_ingredients:
+            return "Hard"
