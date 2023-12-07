@@ -88,7 +88,8 @@
                         <span class="attribute-name">
                             Difficulty: 
                         </span>
-                        {{object.calculate_difficulty}}
+                            {{object.calculate_difficulty|default_if_none:"" }}
+                            {{object.difficulty}}
                     </p>
                     <p class="details__item">
                         <span class="attribute-name">

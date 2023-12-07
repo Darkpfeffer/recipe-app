@@ -40,11 +40,28 @@ class Recipe(models.Model):
         few_ingredients = self.ingredients.count() < 4    
         numerous_ingredients = self.ingredients.count() >= 4
 
-        if short_cooking_time and few_ingredients:
-            return "Easy"
-        elif short_cooking_time and numerous_ingredients:
-            return "Medium"
-        elif long_cooking_time and few_ingredients:
-            return "Intermediate"
-        elif long_cooking_time and numerous_ingredients:
-            return "Hard"
+        print("Difficulty calculation begins.. \n")
+
+        if short_cooking_time and few_ingredients and self.difficulty != "Easy":
+            self.difficulty = "Easy"
+            self.save()
+            print("Difficulty is changed to 'Easy' in the database.")
+        elif short_cooking_time and numerous_ingredients and self.difficulty != "Medium":
+            self.difficulty = "Medium"
+            self.save()
+            print("Difficulty is changed to 'Medium' in the database.")
+
+
+        elif long_cooking_time and few_ingredients and self.difficulty != "Intermediate":
+            self.difficulty = "Intermediate"
+            self.save()
+            print("Difficulty is changed to 'Intermediate' in the database.")
+
+        elif long_cooking_time and numerous_ingredients and self.difficulty != "Hard":
+            self.difficulty = "Hard"
+            self.save()
+            print("Difficulty is changed to 'Hard' in the database.")
+        else:
+            print("Difficulty is correct in the database. \n")
+        
+        print("Difficulty calculation ends.")
