@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Recipe app - Homepage</title>
+        <title>{{object.name}} Login - Recipe App</title>
         <meta charset="UTF-8">
         <meta name="viewport" contect="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../../../media/favicon.png">
@@ -9,40 +9,33 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
-        <link href="static/css/recipes_home.css" type="text/css" rel="stylesheet">
+        <link href="../../../static/css/general_pages_settings.css" type="text/css" rel="stylesheet">
+        <link href="../../../static/css/login_styles.css" type="text/css" rel="stylesheet">
     </head>
-    <body>
+    <body> 
         <header>
             <div class="header-content">
                 <div class="header__logo--name">
-                    <a href="{% url 'recipes:home' %}">
+                    <a href="../../">
                         <img 
-                            src="media/app-icon.png" 
+                            src="../../../media/app-icon.png" 
                             rel="app icon" 
                             class="header-icon"
                         >
                     </a>
-                    <a href="{% url 'recipes:home' %}">
+                    <a href="../../">
                         <h3>Recipe app</h3>
                     </a>
                 </div>
-                <div class="desktop header-menu">
-                    <div class="header-menu__item">
-                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
-                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
-                    </div>
-                    <div class="header-menu__item">
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'logout' %}">Logout</a>
-                        {% else %}
-                            <a href="{% url 'login' %}">Login</a>
-                        {% endif %}
+                <div class="desktop">
+                    <div class="header-menu">
+                        <a href="../../recipes/list/">Recipes</a>
+                        <a href="../../ingredients/list/">Ingredients</a>
                     </div>
                 </div>
                 <div class="searchbar-container header-searchbar desktop">
                     <img 
-                        src="media/magnifying_glass.png" 
+                        src="../../../media/magnifying_glass.png" 
                         class="magnifying-glass"
                     >
                     <input 
@@ -54,16 +47,11 @@
                 <!-- mobile view -->
                 <div class="mobile header-mobile">
                     <div id="myLinks">
-                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
-                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'logout' %}">Logout</a>
-                        {% else %}
-                            <a href="{% url 'login' %}">Login</a>
-                        {% endif %}
+                      <a href="../../recipes/list/">Recipes</a>
+                      <a href="../../ingredients/list/">Ingredients</a>
                       <div class="searchbar-container header-searchbar">
                         <img 
-                            src="media/magnifying_glass.png" 
+                            src="../../../media/magnifying_glass.png" 
                             class="magnifying-glass"
                         >
                         <input 
@@ -80,24 +68,26 @@
                   </div>
             </div>  
         </header>
-        <div class="homepage-content">
-            <div class="homepage-search">
-                <div class="searchbar-container">
-                    <img src="media/magnifying_glass.png" class="magnifying-glass">
-                    <input 
-                        id="homepage-input"
-                        class="searchbar homepage-searchbar" 
-                        placeholder="Search for a recipe or ingredient"
-                    >
-                </div>
-            </div>
-            <div>
+        <div class="all-forms">
+            <div class="form-content">
+                <h1>Login</h1>
 
+                {% comment %} check for error message {% endcomment %}
+                {% if error_message %}
+                    {{error_message}}
+                {% endif %}
+
+                <form action="" method="POST" >
+                    {% comment %} add Django security token {% endcomment %}
+                    {% csrf_token %}   
+
+                    {% comment %} print form received from view  {% endcomment %}
+                    <p>Username: {{form.username}}</p>
+                    <p>Password: {{form.password}}</p>
+
+                    <button type="submit" class="primary-button">Login</button>
+                </form>
             </div>
         </div>
-        <footer>
-
-        </footer>
-        <script src="../../../static/js/general.js"></script>
     </body>
 </html>

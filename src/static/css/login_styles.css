@@ -1,0 +1,30 @@
+.all-forms {
+    margin-top: 6em;
+    display: flex;
+    justify-content: center;
+}
+
+.form-content {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+    padding-top: 0em;
+    background-color: #d42b2b;
+    border-radius: 3vw;
+}
+
+.form-content p {
+    font-weight: 700;
+}
+
+.primary-button {
+    background-color: #ff9f94;
+    border-radius: 1em;
+    border: 1px solid black;
+    padding: 0.5em 1em;
+}
+
+.primary-button:active {
+    background-color: #d42b2b;
+}

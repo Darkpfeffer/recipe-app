@@ -79,7 +79,12 @@ header {
     flex-direction: row;
 }
 
-.header__logo--name a, .header-menu a {
+.header-menu {
+    width: 22vw;
+    justify-content: space-between;
+}
+
+.header__logo--name a, .header-menu__item a {
     text-decoration: none;
     color: black;
 }
