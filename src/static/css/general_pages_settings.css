@@ -51,6 +51,7 @@ h3 {
 header {
     display: flex;
     background-image: linear-gradient(#ff9f94, #d42b2b);
+    justify-content: center;
     position: fixed;
     left: 0;
     top: 0;
@@ -62,10 +63,8 @@ header {
     display: inherit;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 75vw;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .header-icon {
@@ -80,13 +79,17 @@ header {
 }
 
 .header-menu {
-    width: 22vw;
+    width: 27vw;
     justify-content: space-between;
 }
 
 .header__logo--name a, .header-menu__item a {
     text-decoration: none;
     color: black;
+}
+
+.header-menu__item a {
+    margin: 0 0.2em;
 }
 
 .header-searchbar {
