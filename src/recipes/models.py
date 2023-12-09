@@ -21,7 +21,7 @@ class Recipe(models.Model):
         null=True,
         help_text='Add quantities of the ingredients in the format: ' + 
         '(100, gram), (50, milliliter)')
-    difficulty = models.CharField(max_length=12, blank=True, null=True)
+    difficulty = models.CharField(max_length=12, blank=True, null=True, editable=False)
     recipe_cost = models.FloatField(blank=True, null=True)
     creator_id = models.ForeignKey('users.User', on_delete=models.PROTECT)
     recipe_directions = models.TextField(default="No directions added.")
