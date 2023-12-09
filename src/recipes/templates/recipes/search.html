@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h3>Search for recipes or ingredients</h3>
+        <br>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">Search</button>
+        </form>
+        <br>
+        {% if search_df %}
+            {{search_df|safe}} 
+        {% else %}
+            <h3> no data</h3>
+        {% endif %}
+    </body>
+</html>

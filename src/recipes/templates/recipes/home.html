@@ -41,15 +41,20 @@
                     </div>
                 </div>
                 <div class="searchbar-container header-searchbar desktop">
-                    <img 
-                        src="media/magnifying_glass.png" 
-                        class="magnifying-glass"
-                    >
-                    <input 
-                        id="header-input"
-                        class="searchbar"
-                        placeholder="Search for a recipe or ingredient"
-                    > 
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input 
+                            id="header-input"
+                            class="searchbar"
+                            placeholder="Search for a recipe or ingredient"
+                        > 
+                        <button type="submit">
+                            <img 
+                                src="media/magnifying_glass.png" 
+                                class="magnifying-glass"
+                            >
+                        </button>
+                    </form>
                 </div>
                 <!-- mobile view -->
                 <div class="mobile header-mobile">
