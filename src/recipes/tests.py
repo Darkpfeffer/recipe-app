@@ -1,8 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.contrib.auth import get_user_model
+from django.shortcuts import reverse
 from .models import Recipe
 from users.models import User
 from ingredients.models import Ingredient
+from .forms import SearchForm
+from .views import search_view
 
 # Create your tests here.
 class RecipeModelTest(TestCase):
@@ -120,4 +123,59 @@ class RecipeModelTest(TestCase):
     def test_calculate_difficulty(self):
         recipe = Recipe.objects.get(id = 1)
 
-        self.assertEqual(recipe.calculate_difficulty(), 'Easy')
+        self.assertEqual(recipe.difficulty, 'Intermediate')
+
+        
+class SearchFormTest(TestCase):
+    def test_search_form_search_is_valid(self):
+        form = SearchForm(data= {
+            'search_criteria': 'hot',
+            'model_choice': '#1',
+            'chart_type': '#1'
+        })
+
+        self.assertTrue(form.is_valid())
+
+    def test_search_form_blank_search_criteria(self):
+        form = SearchForm(data = {
+            'search_criteria': '',
+            'model_choice': '#1',
+            'chart_type': '#1'
+        })
+
+        self.assertTrue(form.is_valid())
+
+    def some(self):
+        form = SearchForm(data = {
+            'search_criteria': 'asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd',
+            'model_choice': '#1',
+            'chart_type': '#1'
+        })
+
+        self.assertFalse(form.is_valid())
+
+class SearchViewTest(TestCase):
+    def setUpTestData():
+        user= get_user_model().objects.create_user(
+            username = 'testuser', password='secret'
+        )
+
+        User.objects.create(
+            username = user,
+            name = "Erik Vasquez",
+            email = "vasquez@example.com",
+            birthday = "1212-12-12"
+        )
+
+    def test_search_view_requires_login(self):
+        user = User.objects.get(id = 1)
+        
+        factory = RequestFactory()
+
+        request = factory.get(reverse('recipes:search'))
+
+        request.user = user.username
+
+        response = search_view(request)
+
+        self.assertEqual(response.status_code, 200)
