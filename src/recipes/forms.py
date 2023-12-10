@@ -8,8 +8,8 @@ SEARCH_MODEL_CHOICES = (
 
 CHART_CHOICES = (
     ('#1', 'Bar chart (Recipe)'),
-    ('#2', 'Pie chart (Recipe)'),
-    ('#3', 'Line chart (Ingredient)'),
+    ('#2', 'Pie chart (Ingredient)'),
+    ('#3', 'Line chart (Recipe)'),
     ('#4', 'None')
 )
 

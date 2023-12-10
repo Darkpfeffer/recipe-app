@@ -49,15 +49,26 @@ def get_chart(chart_type, model_choice, data, **kwargs):
     #specify figure size
     fig = plt.figure(figsize = (6,3))
 
-    user_occurrence = Recipe.objects.filter(creator_id_id = data['creator_id_id']).count()
-    ingredient_occurrence = Ingredient.objects.get(id = data['id']).recipe_appearance.count()
-
     if chart_type == '#1' and model_choice == '#1':
-        plt.bar(data['creator_id_username'], data[user_occurrence])
+        ingredient_quantities = []
+        for recipe in data['ingredient_quantities']:
+            ingredient_quantities.append(len(recipe.split('), ')))
+        
+        plt.bar(data['name'], ingredient_quantities)
 
     elif chart_type == '#2' and model_choice == '#2':
+        recipes = Recipe.objects.all()
+        all_ingredient_list = []
+        ingredients_count = []
+        for recipe in recipes:
+            for ingredient in recipe.ingredients.all():
+                all_ingredient_list.append(ingredient.name)
+        
         labels=kwargs.get('labels')
-        plt.pie(data[ingredient_occurrence], labels=labels)
+        for data_item in data['name'].values:
+            ingredients_count.append(all_ingredient_list.count(data_item))
+
+        plt.pie(ingredients_count, labels=labels)
 
     elif chart_type == '#3' and model_choice == '#1':
         plt.plot(data['name'], data['cooking_time'])

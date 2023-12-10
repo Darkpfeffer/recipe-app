@@ -12,6 +12,8 @@
         <br>
         {% if search_df %}
             {{search_df|safe}}
+            <br>
+            <img src="data:image/png;base64, {{chart|safe}}">
         {% else %}
             <h3> no data</h3>
         {% endif %}
