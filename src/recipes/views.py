@@ -38,24 +38,26 @@ def search_view(request):
         if model_choice == '#1':
             qs = Recipe.objects.filter(name__contains= search_criteria)
 
-            search_df = pd.DataFrame(qs.values())
+            if qs:
 
-            search_df['creator_id_id'] = search_df['creator_id_id'].apply(get_username_from_id)
+                search_df = pd.DataFrame(qs.values())
 
-            search_df['url'] = protocol + current_host + search_df['id'].apply(make_clickable_recipe)
-            
-            search_df = search_df.to_html(render_links=True)
+                search_df['creator_id_id'] = search_df['creator_id_id'].apply(get_username_from_id)
+
+                search_df['url'] = protocol + current_host + search_df['id'].apply(make_clickable_recipe)
+                
+                search_df = search_df.to_html(render_links=True)
 
         if model_choice == '#2':
             qs = Ingredient.objects.filter(name__contains= search_criteria)
 
-            search_df = pd.DataFrame(qs.values())
+            if qs:
 
-            search_df['url'] = protocol + current_host + search_df['id'].apply(make_clickable_ingredient)
-            
-            search_df = search_df.to_html(render_links=True)
+                search_df = pd.DataFrame(qs.values())
 
-            print(search_df)
+                search_df['url'] = protocol + current_host + search_df['id'].apply(make_clickable_ingredient)
+                
+                search_df = search_df.to_html(render_links=True)
 
     context = {
         'form': form,
