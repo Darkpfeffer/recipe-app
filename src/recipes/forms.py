@@ -7,5 +7,5 @@ SEARCH_MODEL_CHOICES = (
 )
 
 class SearchForm(forms.Form):
-    search_criteria = forms.CharField(max_length = 200)
+    search_criteria = forms.CharField(max_length = 200, required=False)
     model_choice = forms.ChoiceField(choices = SEARCH_MODEL_CHOICES)
