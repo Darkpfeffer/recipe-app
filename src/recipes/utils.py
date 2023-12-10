@@ -1,3 +1,4 @@
+from django.shortcuts import reverse
 from users.models import User
 from .models import Recipe
 
@@ -7,7 +8,7 @@ def get_username_from_id(val):
     return username
 
 def make_clickable(val):
-    recipe = Recipe.objects.get(name = val)
+    recipe = Recipe.objects.get(id = val)
     recipeURL = recipe.get_absolute_url()
 
-    return f'<a href="{recipeURL}>{recipe.name}<a>'
+    return recipeURL

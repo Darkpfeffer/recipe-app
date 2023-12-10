@@ -26,6 +26,12 @@ def search_view(request):
     if request.method == 'POST':
         search_criteria = request.POST.get('search_criteria')
         model_choice = request.POST.get('model_choice')
+        current_host = request.get_host()
+        
+        if request.is_secure():
+            protocol = "https://" 
+        else:
+            protocol ="http://"
 
         if model_choice == '#1':
             qs = Recipe.objects.filter(name__contains= search_criteria)
@@ -34,7 +40,9 @@ def search_view(request):
 
             search_df['creator_id_id'] = search_df['creator_id_id'].apply(get_username_from_id)
 
-            search_df['name'] = search_df['name'].apply(make_clickable)
+            search_df['name'] = search_df['name']
+
+            search_df['url'] = protocol + current_host + search_df['id'].apply(make_clickable)
             
             search_df = search_df.to_html(render_links=True)
 
@@ -50,4 +58,5 @@ def search_view(request):
         'search_df': search_df
     }
 
+    
     return render( request, 'recipes/search.html', context )
