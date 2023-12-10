@@ -44,17 +44,12 @@
                             <a href="{% url 'login' %}">Login</a>
                         {% endif %}
                     </div>
-                </div>
-                <div class="searchbar-container header-searchbar desktop">
-                    <img 
-                        src="../../../media/magnifying_glass.png" 
-                        class="magnifying-glass"
-                    >
-                    <input 
-                        id="header-input"
-                        class="searchbar"
-                        placeholder="Search for a recipe or ingredient"
-                    > 
+                    <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                        <img 
+                            src="../../../media/magnifying_glass.png" 
+                            class="magnifying-glass"
+                        >
+                    </a>
                 </div>
                 <!-- mobile view -->
                 <div class="mobile header-mobile">
@@ -71,17 +66,12 @@
                         {% else %}
                             <a href="{% url 'login' %}">Login</a>
                         {% endif %}
-                      <div class="searchbar-container header-searchbar">
-                        <img 
-                            src="../../../media/magnifying_glass.png" 
-                            class="magnifying-glass"
-                        >
-                        <input 
-                            id="header-input__mobile"
-                            class="searchbar"
-                            placeholder="Search for a recipe or ingredient"
-                        > 
-                    </div>
+                        <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                            <img 
+                                src="../../../media/magnifying_glass.png" 
+                                class="magnifying-glass"
+                            >
+                        </a>
                     </div>
                     <!-- Hamburger menu to toggle the navigation links -->
                     <a href="javascript:void(0);" class="icon" onclick="myFunction()">

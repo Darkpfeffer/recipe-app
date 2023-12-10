@@ -39,6 +39,7 @@ h3 {
 .magnifying-glass {
     height: 1em;
     width: 1em;
+    background: none;
 }
 
 .searchbar {
