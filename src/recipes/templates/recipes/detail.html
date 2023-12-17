@@ -97,7 +97,11 @@
                         <span class="attribute-name">
                             Creator: 
                         </span>
-                        {{object.creator_id.username}}
+                        {% if object.creator.user_info.username %}
+                            {{object.creator.user_info.username}}
+                        {% else %}
+                            <p>Unknown</p>
+                        {% endif %}
                     </p>
                     <p class="details__item">
                         <span class="attribute-name">

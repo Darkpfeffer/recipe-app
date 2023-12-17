@@ -1,12 +1,5 @@
 from django.db import models
 from django.shortcuts import reverse
-import users.models
-import ingredients.models
-
-quantity_unit_choices = (
-    ('milliliter', 'Milliliter'),
-    ('gram', 'Gram')
-)
 
 # Create your models here.
 class Recipe(models.Model):
@@ -19,11 +12,16 @@ class Recipe(models.Model):
     ingredient_quantities = models.TextField(
         max_length=2000, 
         null=True,
-        help_text='Add quantities of the ingredients in the format: ' + 
-        '(100, gram), (50, milliliter)')
+        help_text='Add quantities of the ingredients (value will be gram or milliliter ' +
+        'based on the ingredient.) Write in quantities separated with comma and space (, ):' + 
+        ' Example: 100, 50, 200')
     difficulty = models.CharField(max_length=12, blank=True, null=True, editable=False)
-    recipe_cost = models.FloatField(blank=True, null=True)
-    creator_id = models.ForeignKey('users.User', on_delete=models.PROTECT)
+    recipe_cost = models.FloatField(blank=True, null=True, editable=False)
+    creator = models.ForeignKey(
+        'users.User', 
+        on_delete=models.PROTECT,
+        editable=False
+    )
     recipe_directions = models.TextField(default="No directions added.")
     pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
 

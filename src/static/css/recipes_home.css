@@ -10,39 +10,17 @@
     flex-direction: column;
     background-image: url("../../media/welcome_search_background.JPG");
     background-repeat: no-repeat;
-    background-size: 49vw 30vw;
-    height: 20vw;
-    width: 49vw;
+    background-size: 70vw 40vw;
+    height: 40vw;
+    width: 70vw;
     justify-content: center;
     align-items: center;
 }
 
-.homepage-searchbar {
-    border: none;
-    width: 30vw;
-}
-
 @media all and (min-width: 1920px) {
     .homepage-search {
-        background-size: 941px 576px;
-        height: 384px;
-        width: 941px;
-    }
-
-    .homepage-searchbar {
-        border: none;
-        width: 573px;
-    }
-}
-
-@media all and (max-width: 970px) {
-    .homepage-search {
-        background-size: 98vw 60vw;
-        height: 40vw;
-        width: 98vw;
-    }
-
-    .homepage-searchbar {
-        width: 60vw;
+        background-size: 1440px 823px;
+        height: 823px;
+        width: 1440px;
     }
 }

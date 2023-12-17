@@ -4,6 +4,7 @@ import pandas as pd
 from django.contrib.auth.decorators import login_required
 #imported models and fuctions from Project
 from .forms import SearchForm
+from users.models import User
 from .models import Recipe
 from ingredients.models import Ingredient
 from .utils import get_username_from_id, make_clickable_recipe, \
