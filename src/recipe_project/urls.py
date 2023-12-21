@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipes.urls')),
     path('', include('ingredients.urls')),
+    path('', include('users.urls')),
     path('login/', login_view, name = 'login'),
     path('logout/', logout_view, name = 'logout'),
     path('success/', success_view, name = 'success'),

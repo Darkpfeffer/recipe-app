@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <p>{{object.user_info.username}}</p>
+        {% for created_recipe in object.created_recipes.all %}
+                <p>{{created_recipe.id}}</p>
+            {% endfor %}
+        {% if user.username == object.user_info.username %}
+            <p>{{object.user_info.email}}</p>
+            {% for favorite in object.favorite_recipes.all%}
+                <p>{{favorite}}</p>
+            {% endfor %}
+        {% endif %}
+    </body>
+</html>
