@@ -1,3 +1,4 @@
+from typing import Any
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 import pandas as pd
@@ -8,18 +9,43 @@ from .models import Recipe
 from ingredients.models import Ingredient
 from .utils import get_username_from_id, make_clickable_recipe, \
     make_clickable_ingredient, get_chart
+from recipe_project.views import profile_absolute_url
 
 # Create your views here.
 def home(request):
-    return render(request, "recipes/home.html")
+    profile_url = profile_absolute_url(request)
+
+    context = {
+        "profile_url": profile_url
+    }
+
+    return render(request, "recipes/home.html", context)
 
 class RecipeListView(ListView):
     model = Recipe
     template_name = 'recipes/main.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        profile_url = profile_absolute_url(self.request)
+
+        context["profile_url"] = profile_url
+
+        return context
+
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        profile_url = profile_absolute_url(self.request)
+
+        context["profile_url"] = profile_url
+
+        return context
 
 @login_required
 def search_view(request):
@@ -76,11 +102,13 @@ def search_view(request):
                 
                 search_df = search_df.to_html(render_links=True)
 
+    profile_url = profile_absolute_url(request)
+
     context = {
         'form': form,
         'search_df': search_df,
-        'chart': chart
+        'chart': chart,
+        'profile_url': profile_url
     }
-
     
     return render( request, 'recipes/search.html', context )

@@ -39,6 +39,9 @@
                     </div>
                     <div class="header-menu__item">
                         {% if user.is_authenticated %}
+                            {% if request.user.is_authenticated %}
+                                <a href="{{profile_url}}">Profile</a>
+                            {% endif %}
                             <a href="{% url 'logout' %}">Logout</a>
                         {% else %}
                             <a href="{% url 'login' %}">Login</a>
@@ -62,6 +65,7 @@
                         </a>
                         <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
                         {% if user.is_authenticated %}
+                            <a href="{{profile_url}}">Profile</a>
                             <a href="{% url 'logout' %}">Logout</a>
                         {% else %}
                             <a href="{% url 'login' %}">Login</a>
@@ -98,5 +102,6 @@
                 <h3> no data</h3>
             {% endif %}
         </div>
+        <script src="../../../static/js/general.js"></script>
     </body>
 </html>

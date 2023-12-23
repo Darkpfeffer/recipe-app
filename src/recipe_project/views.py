@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import RegisterUserForm
@@ -35,6 +35,9 @@ def login_view(request):
     return render(request, 'auth/login.html', context)
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('recipes:home')
+    
     error_message = None
 
     form = RegisterUserForm(request.POST or None)
@@ -69,7 +72,7 @@ def register_view(request):
 
     context =  {
         'form': form,
-        'error_message': error_message
+        'error_message': error_message,
     }
 
     return render( request, 'auth/register.html', context)        
@@ -79,4 +82,16 @@ def logout_view(request):
     return redirect('success')
 
 def success_view(request):
-    return render(request, 'auth/success.html')
+    context = {
+        'profile_url': profile_absolute_url(request)
+    }
+    return render(request, 'auth/success.html', context)
+
+def profile_absolute_url(request):
+    profile = None
+
+    try:
+        profile = User.objects.get(user_info__id = request.user.id).id
+    except:
+        print('User is not logged in.')
+    return reverse('users:profile', kwargs={'pk': profile})

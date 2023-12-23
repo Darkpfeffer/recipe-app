@@ -1,9 +1,11 @@
-from django.shortcuts import render
 from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from recipe_project.views import profile_absolute_url
+
 from .models import User
 # Create your views here.
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'users/profile.html'
 
@@ -12,6 +14,10 @@ class ProfileDetailView(DetailView):
 
         user = self.request.user
 
+        profile_url = profile_absolute_url(self.request)
+
         context["user"] = user
+
+        context["profile_url"] = profile_url
 
         return context
