@@ -1,7 +1,9 @@
+from django.urls import reverse_lazy
 from django.views.generic import DetailView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from recipe_project.views import profile_absolute_url
-
+from django.contrib.auth.models import User as UserAuth
 from .models import User
 # Create your views here.
 
