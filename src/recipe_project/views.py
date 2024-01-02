@@ -95,3 +95,13 @@ def profile_absolute_url(request):
     except:
         print('User is not logged in.')
     return reverse('users:profile', kwargs={'pk': profile})
+
+def user_absolute_url(request):
+    user = None
+
+    try:
+        user = request.user.id
+    except:
+        print('User is not found')
+
+    return reverse('users:edit_email', kwargs={'pk': user})

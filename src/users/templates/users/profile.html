@@ -7,6 +7,8 @@
             {% endfor %}
         {% if user.username == object.user_info.username %}
             <p>{{object.user_info.email}}</p>
+            <a href="{{change_email_url}}">Change email address</a>
+            <a href="{% url 'users:edit_password'%}">Change password</a>
             {% for favorite in object.favorite_recipes.all%}
                 <p>{{favorite}}</p>
             {% endfor %}
