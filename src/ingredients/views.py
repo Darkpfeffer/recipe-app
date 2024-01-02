@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 from .models import Ingredient
 from .forms import CreateIngredientForm
 from recipe_project.views import profile_absolute_url
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -32,7 +33,8 @@ class IngredientDetailView(DetailView):
         context["profile_url"] = profile_url
 
         return context
-    
+
+@login_required    
 def create_ingredient_view(request):
     form = CreateIngredientForm( request.POST or None )
 
