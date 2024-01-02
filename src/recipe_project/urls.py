@@ -23,8 +23,8 @@ from .views import login_view, logout_view, success_view, register_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('recipes.urls')),
-    path('', include('ingredients.urls')),
-    path('', include('users.urls')),
+    path('ingredients/', include('ingredients.urls')),
+    path('profile/', include('users.urls')),
     path('login/', login_view, name = 'login'),
     path('logout/', logout_view, name = 'logout'),
     path('success/', success_view, name = 'success'),

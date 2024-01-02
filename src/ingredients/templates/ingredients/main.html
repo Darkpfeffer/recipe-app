@@ -85,6 +85,7 @@
         </header>
         <div class="main__list">
             <h1>Ingredients</h1>
+            <a href="{% url 'ingredients:create_ingredient' %}">Add new ingredient</a>
             <div class="grid-container">
                 {% for object in object_list %}
                     <div class="grid-item">
