@@ -111,3 +111,13 @@ def search_view(request):
     }
     
     return render( request, 'recipes/search.html', context )
+
+def check_ingredient_view(request):
+
+    all_ingredients = Ingredient.objects.all()
+
+    context = {
+        "all_ingredients" : all_ingredients
+    }
+
+    return render(request, 'recipes/ingredient_check.html', context)

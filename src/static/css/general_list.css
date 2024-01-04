@@ -32,6 +32,19 @@
 
 /* Grid end */
 
+/* Searching */
+.hidden {
+    display: none;
+}
+
+.existing {
+    color: green;
+}
+
+.missing {
+    color: red;
+}
+
 @media all and (min-width: 1920px) {
     .main__list {
         width: 1440px;

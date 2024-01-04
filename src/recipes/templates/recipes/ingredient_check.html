@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <title>Ingredient check - Recipe app</title>
+        <link href="{% static 'css/general_list.css' %}" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <p class="js-alert">This site needs JavaScript to run properly.</p>
+        <form>
+            <input type="text" class="searching-ingredient">
+            <p>
+                Write every ingredient you would like to add to 
+                your recipe (separate them with comma and space ", ")
+            </p>
+            <button class="search-button">Check ingredients</button>
+        </form>
+        <div class="check-all-ingredients">
+        </div>
+            <p class="check-ingredient-list">
+                {% for ingredient in all_ingredients%}
+                    {% if not forloop.last %}
+                    {{ingredient.name}}, 
+                    {% else %}
+                    {{ingredient.name}}
+                    {% endif %}
+                {% endfor %}
+            </p>
+        <a 
+            class="check-error hidden" 
+            id="check-error" 
+            href="{% url 'ingredients:create_ingredient' %}"
+            target="_blank"
+        >
+            Add the missing ingredients here
+        </a>
+        <p class="check-error hidden">
+            If you added all the missing ingredients to the database, please refresh the page
+        </p>
+        <script src="{% static 'js/searching.js' %}"></script>
+    </body>
+</html>
