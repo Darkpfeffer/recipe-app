@@ -44,6 +44,8 @@ def create_ingredient_view(request):
         ingredient_unit_type = request.POST.get('ingredient_unit_type')
         pic = request.FILES.get('pic')
 
+        print(pic)
+
         if not pic:
             pic = 'no_picture.jpg'
         else:

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <title>Ingredient check - Recipe app</title>
+        <link href="{% static 'css/general_list.css' %}" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <p class="js-alert">
+            This site needs JavaScript to run properly. (Try refreshing and enable JavaScript 
+            in your browser)
+        </p>
+        <form id="search-ingredient-form">
+            <input type="text" class="searching-ingredient" id="search-ingredient-input">
+            <p>
+                Write every ingredient you would like to add to 
+                your recipe (separate them with comma and space ", ")
+            </p>
+            <button class="search-button">Check ingredients</button>
+        </form>
+
+        <div class="create-ingredients hidden" >
+            <p>
+                If the ingredient is colored red, you have to add it to the database 
+                using the form under the ingredient list.
+            </p>
+            <div id="check-all-ingredients">
+            </div>
+            <p id="ingredient-form">
+                Name: <span id="ingredient-name"></span>
+                <span id="ingredient-name__input" class="hidden">{{ingr_form.name}}</span><br>
+                Price: {{ingr_form.price}}$   
+                <span id="create-ingredient__error"></span><br>
+                Unit type: {{ingr_form.ingredient_unit_type}}<br>
+                Picture: {{ingr_form.pic}}<br>
+            </p>
+            <button id="ingredient-form__button">Save ingredient</button>
+        </div>
+
+        
+        
+        <form id="add-ingredients" action="" method="POST" class="hidden" novalidate>
+            {{ingr_to_database.inputs}}
+            {% csrf_token %}
+            <button type="submit">Add ingredients to the database</button>
+        </form>
+            <p class="check-ingredient-list">
+                {% for ingredient in all_ingredients%}
+                    {% if not forloop.last %}
+                    {{ingredient.name}}, 
+                    {% else %}
+                    {{ingredient.name}}
+                    {% endif %}
+                {% endfor %}
+            </p>
+        <script src="{% static 'js/create_recipe.js' %}"></script>
+    </body>
+</html>

@@ -24,7 +24,7 @@ class SearchForm(forms.Form):
     model_choice = forms.ChoiceField(choices = SEARCH_MODEL_CHOICES)
     chart_type = forms.ChoiceField(choices= CHART_CHOICES)
 
-class AddRecipe(forms.Form):
+class CreateRecipeForm(forms.Form):
     name = forms.CharField(max_length=120)
     cooking_time = forms.IntegerField()
     ingredients = forms.ModelMultipleChoiceField(

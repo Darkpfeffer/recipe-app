@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 import pandas as pd
 from django.contrib.auth.decorators import login_required
 #imported models and fuctions from Project
-from .forms import SearchForm
+from .forms import SearchForm, CreateRecipeForm
 from .models import Recipe
 from ingredients.models import Ingredient
+from ingredients.forms import CreateIngredientForm, CreateIngredientAtRecipeForm
 from .utils import get_username_from_id, make_clickable_recipe, \
     make_clickable_ingredient, get_chart
 from recipe_project.views import profile_absolute_url
@@ -112,12 +113,34 @@ def search_view(request):
     
     return render( request, 'recipes/search.html', context )
 
-def check_ingredient_view(request):
+@login_required
+def create_recipe_view(request):
 
     all_ingredients = Ingredient.objects.all()
+    ingr_form = CreateIngredientForm(request.POST or None)
+    rec_form = CreateRecipeForm(request.POST or None)
+    ingr_to_database = CreateIngredientAtRecipeForm(request.POST or None)
+
+    if request.method == "POST":
+        new_ingredients = request.POST.get('inputs').split("//, ")
+        
+        for ingredient in new_ingredients:
+            ingredient_attributes = ingredient.split(", ")
+
+            Ingredient.objects.create(
+                name = ingredient_attributes[0],
+                price = ingredient_attributes[1],
+                ingredient_unit_type = ingredient_attributes[2]
+            )
+
+
+        return redirect('recipes:create_recipe')
 
     context = {
-        "all_ingredients" : all_ingredients
+        "all_ingredients" : all_ingredients,
+        "ingr_form": ingr_form,
+        "ingr_to_database": ingr_to_database,
+        "rec_form": rec_form
     }
 
-    return render(request, 'recipes/ingredient_check.html', context)
+    return render(request, 'recipes/create_recipe.html', context)

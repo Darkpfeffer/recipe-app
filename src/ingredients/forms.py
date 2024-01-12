@@ -7,8 +7,15 @@ class CreateIngredientForm(forms.Form):
     )
     name = forms.CharField(max_length=120)
     price = forms.FloatField(help_text='The value is in dollar. '+\
-                              'Add the average price of the ingredient. ' +\
-                                'Measures are in "kilogram" and "liter".')
+                              'Add the average price of the ingredient.')
     ingredient_unit_type = forms.ChoiceField(
-        choices=price_unit_choices)
+        choices=price_unit_choices,
+        help_text= 'Measures are in "kilogram" and "liter".')
     pic = forms.ImageField(required=False)
+
+class CreateIngredientAtRecipeForm(forms.Form):
+    inputs = forms.CharField(
+        widget= forms.Textarea(
+            attrs={'rows': 5, 'cols': 40}
+        )
+    )
