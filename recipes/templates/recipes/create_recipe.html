@@ -36,12 +36,17 @@
             </p>
             <button id="ingredient-form__button">Save ingredient</button>
         </div>
-
         
-        
-        <form id="add-ingredients" action="" method="POST" class="hidden" novalidate>
-            {{ingr_to_database.inputs}}
+        <form 
+            id="add-ingredients" 
+            action="" 
+            method="POST" 
+            class="hidden"  
+            enctype="multipart/form-data" 
+            novalidate
+        >
             {% csrf_token %}
+            {{ingr_to_database.inputs}}
             <button type="submit">Add ingredients to the database</button>
         </form>
             <p class="check-ingredient-list">

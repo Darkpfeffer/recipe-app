@@ -118,6 +118,7 @@ ingrFormButton.addEventListener('click', (event) => {
 
         temporaryIngredientInput.push(currentIngredientInput)
         temporaryPictureInput.push(ingredientPictureInput.value)
+
         currentIngredient.classList.add("existing");
         currentIngredient.classList.remove("missing");
     } else {
@@ -138,15 +139,13 @@ ingrFormButton.addEventListener('click', (event) => {
     if (ingredientsToDatabase.length === 0) {
         createIngredientsForm.classList.add("hidden");
         addIngredients = document.querySelector("#add-ingredients");
-        addIngredients.firstElementChild.classList.add("hidden");
-        addIngredients.classList.remove("hidden")
-        console.log(temporaryIngredientInput)
-        for (i = 0; i < temporaryIngredientInput.length; i++) {
-            console.log(temporaryIngredientInput[i])
-        }
         sendIngredients = document.querySelector("#id_inputs")
-        console.log(sendIngredients)
+
+        sendIngredients.classList.add("hidden");
+        addIngredients.classList.remove("hidden")
+        for (i = 0; i < temporaryPictureInput.length; i++) {
+            console.log(temporaryPictureInput[i])
+        }
         sendIngredients.value = temporaryIngredientInput.join("//, ")
-        console.log(sendIngredients.value)
     }
 })
