@@ -12,6 +12,7 @@
         </p>
         <form id="search-ingredient-form">
             <input type="text" class="searching-ingredient" id="search-ingredient-input">
+            <p id="search-ingredient__error"></p>
             <p>
                 Write every ingredient you would like to add to 
                 your recipe (separate them with comma and space ", ")
@@ -26,15 +27,16 @@
             </p>
             <div id="check-all-ingredients">
             </div>
-            <p id="ingredient-form">
-                Name: <span id="ingredient-name"></span>
-                <span id="ingredient-name__input" class="hidden">{{ingr_form.name}}</span><br>
-                Price: {{ingr_form.price}}$   
-                <span id="create-ingredient__error"></span><br>
-                Unit type: {{ingr_form.ingredient_unit_type}}<br>
-                Picture: {{ingr_form.pic}}<br>
-            </p>
-            <button id="ingredient-form__button">Save ingredient</button>
+            <form id="ingredient-form">
+                <label for="name">Name: <span id="ingredient-name"></span></label>
+                {{ingr_form.name}}<br>
+                <label for="price">Price: </label>
+                {{ingr_form.price}}$   
+                <p id="create-ingredient__error"></p>
+                <label for="ingredient_unit_type">Type: </label>
+                {{ingr_form.ingredient_unit_type}}<br>
+                <button id="ingredient-form__button">Save ingredient</button>
+            </form>
         </div>
         
         <form 
@@ -46,8 +48,7 @@
             novalidate
         >
             {% csrf_token %}
-            {{ingr_to_database.inputs}}
-            <button type="submit">Add ingredients to the database</button>
+            <textarea name="inputs" cols="40" rows="5" required id="id_inputs"></textarea>
         </form>
             <p class="check-ingredient-list">
                 {% for ingredient in all_ingredients%}

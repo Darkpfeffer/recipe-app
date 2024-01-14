@@ -1,5 +1,6 @@
 createIngredientsForm = document.querySelector(".create-ingredients");
 IngredientResults = document.querySelector("#check-all-ingredients");
+addIngredients = document.querySelector("#add-ingredients");
 
 checkIngredientsContainer =  document.querySelector(".check-ingredient-list");
 
@@ -16,21 +17,16 @@ jsAlert.classList.add("hidden");
 searchButton = document.querySelector(".search-button");
 ingredientForm = document.querySelector("#ingredient-form");
 ingrFormButton = document.querySelector("#ingredient-form__button");
-ingredientsToDatabase = document.querySelectorAll(".missing");
 
 searchButton.addEventListener("click", (event) => {
     event.preventDefault();
 
     searchIngredientForm = document.querySelector("#search-ingredient-form")
 
-    searchIngredientForm.classList.add("hidden")
-
-    searchButton.classList.add("hidden")
-
-    IngredientResults.innerHTML = "";
-
     searchedIngredients = document.querySelector(".searching-ingredient")
     .value.toLowerCase().split(", ");
+
+    IngredientResults.innerHTML = "";
 
     temporaryIngredients = [];
 
@@ -44,6 +40,14 @@ searchButton.addEventListener("click", (event) => {
 
     temporaryIngredients = [];
 
+    searchIngrError = document.querySelector("#search-ingredient__error")
+
+    if (searchedIngredients[0]) {
+        searchIngredientForm.classList.add("hidden")
+    } else {
+        searchIngrError.innerText = "Ingredient form can't be empty."
+    }
+
     for (let i = 0; i < searchedIngredients.length; i++) {
         if (searchedIngredients[0] !== "") { 
             IngredientResults.innerHTML += `<p>${searchedIngredients[i]}</p>`;
@@ -55,14 +59,20 @@ searchButton.addEventListener("click", (event) => {
     // Color the searched ingredients depending on their presence in the database
     for (let i = 0; i < searchedIngredients.length; i++) {
         if (searchedIngredients[0] !== "") {
+            if (searchIngrError !== "") {
+                searchIngrError.innerText = ""
+            }
+
             ingredientClass = searchedIngredients[i].split(" ").join("-");
             selectIngredient = document.querySelector("." + ingredientClass);
-            if(checkIngredients.includes(searchedIngredients[i])) {
+
+            if (checkIngredients.includes(searchedIngredients[i])) {
                 selectIngredient.classList.add("existing");
             }
-            else{
+            else {
                 selectIngredient.classList.add("missing");
             }
+
         }
     }
 
@@ -71,16 +81,15 @@ searchButton.addEventListener("click", (event) => {
     database
     */
 
-    if (document.querySelectorAll(".missing").length > 0) {
-        createIngredientsForm.classList.remove("hidden")
-    } else {
-        ingredientForm.classList.add("hidden");
-        ingrFormButton.classList.add("hidden");
-    }
-
     ingredientsToDatabase = document.querySelectorAll(".missing");
 
-    if (document.querySelectorAll(".missing").length > 0) {
+    if (ingredientsToDatabase.length > 0) {
+        createIngredientsForm.classList.remove("hidden")
+    } else {
+        createIngredientsForm.classList.add("hidden")
+    }
+
+    if (ingredientsToDatabase.length > 0) {
         currentIngredient = ingredientsToDatabase[0];
 
         ingredientName = currentIngredient.innerText;
@@ -88,16 +97,25 @@ searchButton.addEventListener("click", (event) => {
 
         ingredientNameContainer.innerText = ingredientName;
 
-        ingredientNameInput = document.querySelector("#ingredient-name__input")
-        .firstElementChild;
+        ingredientNameInput = document.querySelector("#id_name");
 
         ingredientNameInput.value = ingredientName;
+
+        ingredientNameInput.classList.add("hidden")
+    }
+
+    for (i = 0; i < ingredientsToDatabase.length; i++) {
+        addIngredients.innerHTML += `<br><label for="pic${i}">Name: ${ingredientsToDatabase[i].innerText}<br> ` + 
+            `Picture: </label>` + 
+            `\n<input type="file" name="pic${i}" accept="image/*" id="id_pic${i}"><br>`
+
+        if (i === ingredientsToDatabase.length -1) {
+            addIngredients.innerHTML += `<br><button type="submit">Add ingredients to the database</button>`
+        }
     }
 })
 
 temporaryIngredientInput = [];
-
-temporaryPictureInput = [];
 
 //This button adds all the Ingredients to "ingr_to_database.inputs"
 ingrFormButton.addEventListener('click', (event) => {
@@ -117,7 +135,6 @@ ingrFormButton.addEventListener('click', (event) => {
         `${ingredientUnitInput.value}`
 
         temporaryIngredientInput.push(currentIngredientInput)
-        temporaryPictureInput.push(ingredientPictureInput.value)
 
         currentIngredient.classList.add("existing");
         currentIngredient.classList.remove("missing");
@@ -134,18 +151,13 @@ ingrFormButton.addEventListener('click', (event) => {
     }
 
     ingredientPriceInput.value = "";
-    ingredientPictureInput.value = "";
 
     if (ingredientsToDatabase.length === 0) {
         createIngredientsForm.classList.add("hidden");
-        addIngredients = document.querySelector("#add-ingredients");
         sendIngredients = document.querySelector("#id_inputs")
 
         sendIngredients.classList.add("hidden");
         addIngredients.classList.remove("hidden")
-        for (i = 0; i < temporaryPictureInput.length; i++) {
-            console.log(temporaryPictureInput[i])
-        }
         sendIngredients.value = temporaryIngredientInput.join("//, ")
     }
 })

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SearchForm, CreateRecipeForm
 from .models import Recipe
 from ingredients.models import Ingredient
-from ingredients.forms import CreateIngredientForm, CreateIngredientAtRecipeForm
+from ingredients.forms import CreateIngredientForm
 from .utils import get_username_from_id, make_clickable_recipe, \
     make_clickable_ingredient, get_chart
 from recipe_project.views import profile_absolute_url
@@ -119,18 +119,22 @@ def create_recipe_view(request):
     all_ingredients = Ingredient.objects.all()
     ingr_form = CreateIngredientForm(request.POST or None)
     rec_form = CreateRecipeForm(request.POST or None)
-    ingr_to_database = CreateIngredientAtRecipeForm(request.POST or None)
 
     if request.method == "POST":
         new_ingredients = request.POST.get('inputs').split("//, ")
         
-        for ingredient in new_ingredients:
+        for idIngredient, ingredient in enumerate(new_ingredients):
             ingredient_attributes = ingredient.split(", ")
+            pic = request.FILES.get('pic' + str(idIngredient))
+
+            if not pic:
+                pic = 'no_picture.jpg'
 
             Ingredient.objects.create(
                 name = ingredient_attributes[0],
                 price = ingredient_attributes[1],
-                ingredient_unit_type = ingredient_attributes[2]
+                ingredient_unit_type = ingredient_attributes[2],
+                pic = pic
             )
 
 
@@ -139,7 +143,6 @@ def create_recipe_view(request):
     context = {
         "all_ingredients" : all_ingredients,
         "ingr_form": ingr_form,
-        "ingr_to_database": ingr_to_database,
         "rec_form": rec_form
     }
 

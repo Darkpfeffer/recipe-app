@@ -12,10 +12,3 @@ class CreateIngredientForm(forms.Form):
         choices=price_unit_choices,
         help_text= 'Measures are in "kilogram" and "liter".')
     pic = forms.ImageField(required=False)
-
-class CreateIngredientAtRecipeForm(forms.Form):
-    inputs = forms.CharField(
-        widget= forms.Textarea(
-            attrs={'rows': 5, 'cols': 40}
-        )
-    )
