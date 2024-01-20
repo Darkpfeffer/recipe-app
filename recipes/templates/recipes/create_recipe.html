@@ -48,7 +48,7 @@
             novalidate
         >
             {% csrf_token %}
-            <textarea name="inputs" cols="40" rows="5" required id="id_inputs"></textarea>
+            <textarea name="ingredient_inputs" cols="40" rows="5" required id="id_inputs"></textarea>
         </form>
             <p class="check-ingredient-list">
                 {% for ingredient in all_ingredients%}

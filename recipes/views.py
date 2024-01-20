@@ -121,25 +121,25 @@ def create_recipe_view(request):
     rec_form = CreateRecipeForm(request.POST or None)
 
     if request.method == "POST":
-        new_ingredients = request.POST.get('inputs').split("//, ")
+        new_ingredients = request.POST.get('ingredient_inputs').split("//, ")
         
-        for idIngredient, ingredient in enumerate(new_ingredients):
-            ingredient_attributes = ingredient.split(", ")
-            pic = request.FILES.get('pic' + str(idIngredient))
+        if new_ingredients:
+            for idIngredient, ingredient in enumerate(new_ingredients):
+                ingredient_attributes = ingredient.split(", ")
+                pic = request.FILES.get('pic' + str(idIngredient))
 
-            if not pic:
-                pic = 'no_picture.jpg'
+                if not pic:
+                    pic = 'no_picture.jpg'
 
-            Ingredient.objects.create(
-                name = ingredient_attributes[0],
-                price = ingredient_attributes[1],
-                ingredient_unit_type = ingredient_attributes[2],
-                pic = pic
-            )
+                Ingredient.objects.create(
+                    name = ingredient_attributes[0],
+                    price = ingredient_attributes[1],
+                    ingredient_unit_type = ingredient_attributes[2],
+                    pic = pic
+                )
 
-
-        return redirect('recipes:create_recipe')
-
+            return redirect('recipes:create_recipe')
+        
     context = {
         "all_ingredients" : all_ingredients,
         "ingr_form": ingr_form,

@@ -8,7 +8,12 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect('recipes:home')
 
+    redirect_request = request.GET.get("next")
     error_message = None
+    redirect_to_page = False
+
+    if redirect_request:
+        redirect_to_page = True
 
     form = AuthenticationForm()
 
@@ -22,7 +27,10 @@ def login_view(request):
             user = authenticate(username = username, password = password)
             if user is not None:
                 login(request, user)
-                return redirect('success')
+                if not redirect_to_page:
+                    return redirect('success')
+                else:
+                    return redirect(redirect_request)
         
         else:
             error_message = 'Something went wrong.'
