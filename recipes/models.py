@@ -19,8 +19,7 @@ class Recipe(models.Model):
     recipe_cost = models.FloatField(blank=True, null=True, editable=False)
     creator = models.ForeignKey(
         'users.User', 
-        on_delete=models.PROTECT,
-        editable=False
+        on_delete=models.PROTECT
     )
     recipe_directions = models.TextField(default="No directions added.")
     pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
