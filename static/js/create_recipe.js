@@ -1,6 +1,7 @@
 createIngredientsForm = document.querySelector(".create-ingredients");
 IngredientResults = document.querySelector("#check-all-ingredients");
 addIngredients = document.querySelector("#add-ingredients");
+recipeForm = document.querySelector("#recipe-form")
 
 checkIngredientsContainer =  document.querySelector(".check-ingredient-list");
 
@@ -82,11 +83,12 @@ searchButton.addEventListener("click", (event) => {
     */
 
     ingredientsToDatabase = document.querySelectorAll(".missing");
+    existingIngredients = document.querySelector(".existing")
 
     if (ingredientsToDatabase.length > 0) {
         createIngredientsForm.classList.remove("hidden")
-    } else {
-        createIngredientsForm.classList.add("hidden")
+    } else if (ingredientsToDatabase.length <= 0 && searchedIngredients[0]) {
+        recipeForm.classList.remove("hidden")
     }
 
     if (ingredientsToDatabase.length > 0) {

@@ -59,6 +59,16 @@
                     {% endif %}
                 {% endfor %}
             </p>
+        
+        <form 
+            id="recipe-form"
+            action="" 
+            method="POST" 
+            class="hidden"  
+            enctype="multipart/form-data"
+        >
+            {{rec_form}}
+        </form>
         <script src="{% static 'js/create_recipe.js' %}"></script>
     </body>
 </html>
