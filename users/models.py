@@ -10,14 +10,12 @@ class User(models.Model):
     favorite_recipes = models.ManyToManyField(
         'recipes.Recipe',
         related_name = "favorite_recipes",
-        blank=True,
-        editable=False
+        blank=True
     )
     created_recipes = models.ManyToManyField(
         'recipes.Recipe',
         related_name="created_recipes",
-        blank=True,
-        editable=False
+        blank=True
     )
     profile_pic = models.ImageField(
         upload_to='users',

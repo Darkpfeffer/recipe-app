@@ -86,6 +86,7 @@ searchButton.addEventListener("click", (event) => {
         //Preparing for creating a new recipe
         let ingredientsLabel = document.querySelector("#ingredients-label")
         let chooseIngredients = document.querySelector("#id_ingredients").children
+        let ingredientIdContainer = ""
 
         ingredientsLabel.innerText += `${searchedIngredients.join(", ")}`
 
@@ -94,13 +95,30 @@ searchButton.addEventListener("click", (event) => {
         recipeForm.classList.remove("hidden")
 
         for( i = 0; i < chooseIngredients.length; i++) {
-            let ingredientName = chooseIngredients[i].firstElementChild
-                .innerText.split(", ")[1].substring(7).toLowerCase()
+            let ingredientInnerText = chooseIngredients[i].firstElementChild
+            .innerText;
+
+            let ingredientName = ingredientInnerText.split(", ")[1]
+                .substring(7).toLowerCase();
+
+            let ingredientId = ingredientInnerText.split(", ")[0]
+                .substring(7).toLowerCase();
 
             if (searchedIngredients.includes(ingredientName)) {
-                chooseIngredients[i].firstElementChild.firstElementChild.checked = true
+                chooseIngredients[i].firstElementChild.firstElementChild
+                    .checked = true;
+                if (ingredientIdContainer === "") {
+                    ingredientIdContainer = String(ingredientId)
+                } else {
+                    ingredientIdContainer += `, ` + String(ingredientId)
+                }
             }
         }
+
+        let ingredientIdInput = document.querySelector("#ingredient_presence")
+        
+        ingredientIdInput.value = ingredientIdContainer
+        console.log(ingredientIdInput.value)
     }
 
     if (ingredientsToDatabase.length > 0) {

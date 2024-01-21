@@ -67,12 +67,14 @@
             class="hidden"  
             enctype="multipart/form-data"
         >
+            {% csrf_token %}
             <label for="name">Name: </label>
             {{rec_form.name}}<br>
             <label for="cooking_time">Cooking Time: </label>
             {{rec_form.cooking_time}}<br>
             <label for="ingredients" id="ingredients-label">Ingredients: </label><br>
             {{rec_form.ingredients}}
+            <input name ="ingredient_presence" id="ingredient_presence" class="hidden">
             <label for="recipe_directions">Description: </label>
             {{rec_form.recipe_directions}}<br>
             <label for="pic">Picture: </label>
