@@ -5,6 +5,8 @@ let addIngredients = document.querySelector("#add-ingredients");
 let recipeForm = document.querySelector("#recipe-form");
 let checkIngredientsContainer =  document.querySelector(".check-ingredient-list");
 let checkIngredients = checkIngredientsContainer.innerText.toLowerCase().split(", ");
+
+console.log(checkIngredients)
 //Buttons with event listeners
 let searchButton = document.querySelector(".search-button");
 let ingrFormButton = document.querySelector("#ingredient-form__button");
@@ -21,7 +23,6 @@ searchButton.addEventListener("click", (event) => {
     event.preventDefault();
 
     //Declaring local variables
-    let ingredientForm = document.querySelector("#ingredient-form");
     let searchIngredientForm = document.querySelector("#search-ingredient-form");
     let searchedIngredients = document.querySelector(".searching-ingredient")
         .value.toLowerCase().split(", ");

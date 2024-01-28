@@ -38,13 +38,21 @@ class RecipeListView(ListView):
 class RecipeDetailView(DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
-
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         profile_url = profile_absolute_url(self.request)
-
         context["profile_url"] = profile_url
+        
+        user = self.request.user
+        context["user"] = user
+
+        edit_recipe = CreateRecipeForm(self.request.POST)
+        context["edit_recipe"] = edit_recipe
+
+        all_ingredients = Ingredient.objects.all()
+        context["all_ingredients"] = all_ingredients
 
         return context
 
@@ -191,7 +199,7 @@ def create_recipe_view(request):
 
             user.save()
 
-            return redirect('recipes:recipe_list')
+            return redirect('recipes:recipe_success')
         
     context = {
         "all_ingredients" : all_ingredients,
@@ -200,3 +208,6 @@ def create_recipe_view(request):
     }
 
     return render(request, 'recipes/create_recipe.html', context)
+
+def recipe_success_view(request):
+    return render(request, 'recipes/create_recipe_success.html')

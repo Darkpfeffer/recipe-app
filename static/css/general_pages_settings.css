@@ -19,6 +19,10 @@ h3 {
     font-size: 1.5em;
 }
 
+.hidden {
+    display: none;
+}
+
 .desktop {
     display: flex;
 }

@@ -84,11 +84,27 @@
                         </span>
                         {{object.name}}
                     </p>
+                    {% if user.username == object.creator.user_info.username %}
+                        <form action ="" method="POST">
+                            {% csrf_token %}
+                            Edit name:
+                            {{edit_recipe.name}}
+                            <button>Submit changes</button>
+                        </form>
+                    {% endif %}
                     <p class="details__item"> 
                         <span class="attribute-name">
                             Cooking time: 
                         </span>{{object.cooking_time}} minutes
                     </p>
+                    {% if user.username == object.creator.user_info.username %}
+                        <form action ="" method="POST">
+                            {% csrf_token %}
+                            Edit cooking time:
+                            {{edit_recipe.cooking_time}}
+                            <button>Submit changes</button>
+                        </form>
+                    {% endif %}
                     <p class="details__item">
                         <span class="attribute-name">
                             Difficulty: 
@@ -112,13 +128,76 @@
                         </span><br>
                         {{object.recipe_directions}}
                     </p>
+                    {% if user.username == object.creator.user_info.username %}
+                        <form action ="" method="POST">
+                            {% csrf_token %}
+                            Edit directions:
+                            {{edit_recipe.recipe_directions}}
+                            <button>Submit changes</button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
             <div class="ingredients">
-                <p class="details__item">Ingredients: </p>       
+                <p class="details__item">Ingredients: </p>
+                    {% if user.username == object.creator.user_info.username %}
+                        <form action ="" method="POST">
+                            {% csrf_token %}
+                            Remove ingredients: <br>
+                            {% for ingredient in object.ingredients.all %}
+                                <input 
+                                    type="checkbox" 
+                                    id="{{ingredient.name}}"
+                                    name="{{ingredient}}"
+                                >
+                                <label for="{{ingredient.name}}">
+                                    {{ingredient.name}}
+                                </label><br>
+                            {% endfor %}
+                            <button>Submit changes</button>
+                        </form>
+                        <div>
+                            <p>Add ingredients:</p>
+                            <form id="check-ingredients-form">
+                                <input type="text" id="check-ingredients">
+                                <p>
+                                    Write every ingredient you would like to add to 
+                                    your recipe (separate them with comma and space ", ")
+                                </p>
+                                <button id="check-button">Search</button>
+                            </form>
+                            <form 
+                                action ="" method="POST" 
+                                id="add-ingredients__form" 
+                                enctype="multipart/form-data"
+                            >
+                                {% csrf_token %}
+                                <input id="add-ingredients" class="hidden">
+                                <div id="added-forms">
+
+                                </div>
+                                <button 
+                                    type="submit" class="hidden"
+                                    id="add-ingredients__button"    
+                                >
+                                    Submit changes
+                                </button>
+                            </form>
+                            <p id="ingredient-list">
+                                {% for ingredient in all_ingredients%}
+                                    {% if not forloop.last %}
+                                    {{ingredient.name}}, 
+                                    {% else %}
+                                    {{ingredient.name}}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    {% endif %}       
                     {% for ingredient in object.ingredients.all %}
                         <a 
                             href="{% url 'ingredients:ingredient_list' %}{{ingredient.id}}"
+                            class="ingredient-in__recipe"
                             >
                                 {{ingredient.name}}
                         </a>
@@ -127,4 +206,5 @@
         </div>
     </body>
     <script src="{% static 'js/general.js' %}"></script>
+    <script src="{% static 'js/edit-recipe.js' %}"></script>
 </html>

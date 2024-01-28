@@ -19,6 +19,7 @@ class Recipe(models.Model):
     recipe_cost = models.FloatField(blank=True, null=True, editable=False)
     creator = models.ForeignKey(
         'users.User', 
+        blank=True,
         on_delete=models.PROTECT
     )
     recipe_directions = models.TextField(default="No directions added.")

@@ -36,5 +36,8 @@ class CreateRecipeForm(forms.Form):
         widget= forms.Textarea(attrs={'rows': 5, 'cols': 40}),
         help_text='Add quantities of the ingredients in the format: ' + 
         '100, 50')
-    recipe_directions = forms.CharField(widget= forms.Textarea(attrs={'rows': 5, 'cols': 40}))
-    pic = forms.ImageField()
+    recipe_directions = forms.CharField(
+        widget= forms.Textarea(attrs={'rows': 5, 'cols': 40}), 
+        required=False
+    )
+    pic = forms.ImageField(required=False)
