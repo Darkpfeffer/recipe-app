@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views import View
+from django.views.generic import ListView, DetailView, UpdateView
 import pandas as pd
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 #imported models and fuctions from Project
 from .forms import SearchForm, CreateRecipeForm
@@ -48,14 +50,85 @@ class RecipeDetailView(DetailView):
         user = self.request.user
         context["user"] = user
 
-        edit_recipe = CreateRecipeForm(self.request.POST)
-        context["edit_recipe"] = edit_recipe
+        return context
+    
+class UpdateRecipeView(LoginRequiredMixin, UpdateView):
+    model = Recipe
+    form = CreateRecipeForm
+    fields = ["name", "cooking_time", "recipe_directions", "pic"]
+    template_name = 'recipes/update_recipe.html'
 
-        all_ingredients = Ingredient.objects.all()
-        context["all_ingredients"] = all_ingredients
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        profile_url = profile_absolute_url(self.request)
+        context["profile_url"] = profile_url
+        
+        user = self.request.user
+        context["user"] = user
 
         return context
+    
+class UpdateRecipeIngredients(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        recipe = Recipe.objects.get(id = pk)
+        all_ingredients = Ingredient.objects.all()
 
+        context = {
+            "recipe": recipe,
+            "all_ingredients": all_ingredients
+        }
+        
+        return render(request, 'recipes/update_recipe_ingredients.html', context)
+    
+    def post(self, request, pk):
+        recipe = Recipe.objects.get(id = pk)
+
+        add_ingredients = request.POST.get('add-ingredients').split(', ')
+        create_ingredients = request.POST.get('create-ingredients').split(', ')
+
+        if add_ingredients or create_ingredients:
+            if len(add_ingredients[0]) > 0:
+                for ingredient in add_ingredients:
+                    try:
+                        add_ingredient = Ingredient.objects.get(name = ingredient)
+
+                        recipe.ingredients.add(add_ingredient)
+                        add_ingredient.recipe_appearance.add(recipe)
+
+                        recipe.save()
+                        add_ingredient.save()
+                    except:
+                        print('Ingredient is not in the database.')
+
+            if create_ingredients:
+                for index, ingredient in enumerate(create_ingredients):
+                    name = request.POST.get('ingredient_name' + str(index))
+                    price = request.POST.get('ingredient_price' + str(index))
+                    ingredient_unit_type = request.POST.get(
+                        'ingredient_unit_type' + str(index)
+                    )
+                    pic = request.FILES.get('ingredient_pic'+ str(index))
+
+                    print(pic)
+
+                    if not pic:
+                        pic = 'no_picture.jpg'
+
+                    add_ingredient = Ingredient.objects.create(
+                        name = name,
+                        price = price,
+                        ingredient_unit_type = ingredient_unit_type,
+                        pic = pic
+                    )
+
+                    recipe.ingredients.add(add_ingredient)
+                    add_ingredient.recipe_appearance.add(recipe)
+
+                    add_ingredient.save()
+
+        return redirect('/recipes/list/' + pk + '/')
+    
 @login_required
 def search_view(request):
     form = SearchForm( request.POST or None )

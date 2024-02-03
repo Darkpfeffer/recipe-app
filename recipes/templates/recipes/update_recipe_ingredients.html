@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Update recipe ingredients - Recipe app</title>
+        <link href="{% static 'css/general_list.css' %}" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Edit: {{recipe.name}} ingredients</h1>
+        <h3>Ingredients already present in the recipe: </h3>
+        <h3 id="used-ingredients">
+            {% for ingredient in recipe.ingredients.all %}
+                {% if not forloop.last %}
+                    {{ingredient.name}}, 
+                {% else %}
+                    {{ingredient.name}}
+                {% endif %}
+            {% endfor %}
+        </h3>
+        <form id="check-ingredients-form">
+            <label for="check-ingredients">
+                Ingredients you would like to add: 
+            </label>
+            <input name="check-ingredients" id="check-ingredients">
+            <button type="button" id="check-button">Check ingredients</button>
+            <p>
+                Write every ingredient you would like to add separated with 
+                comma (,) and space( ).
+            </p>
+        </form>
+        <form 
+            method="post" action="" 
+            enctype="multipart/form-data" id="add-ingredients__form"
+        >
+            {% csrf_token %}
+            <input name="add-ingredients" id="add-ingredients">
+            <input name="create-ingredients" id="create-ingredients">
+            <div id="added-forms"></div>
+            <button id="add-ingredients__button" type="submit">
+                Add ingredient
+            </button>
+        </form>
+        <p id="ingredient-list">
+            {% for ingredient in all_ingredients %}
+                {% if not forloop.last %}
+                    {{ingredient.name}}, 
+                {% else %}
+                    {{ingredient.name}}
+                {% endif %}
+            {% endfor %}
+        </p>
+        <script src="{% static 'js/edit-ingredients.js' %}"></script>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        {% if user.username == object.creator.user_info.username %}
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Update">
+            </form>
+        {% endif %}
+    </body>
+</html>
