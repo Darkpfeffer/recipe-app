@@ -14,10 +14,33 @@ let ingredientListContainer = document.querySelector("#ingredient-list");
 let ingredientList = ingredientListContainer.innerText
     .toLowerCase().split(", ");
 
+let addIngredientsToRecipe = document.querySelector("#add-ingredients__to--recipe");
+let removeIngredientsFromRecipe = document.querySelector("#remove-ingredients__from--recipe");
+
+let addIngredientsMethod = document.querySelector("#ingredients-to__recipe");
+let removeIngredientsMethod = document.querySelector("#ingredients-from__recipe");
+
 ingredientListContainer.classList.add("hidden");
 addIngredientsForm.classList.add("hidden");
 
+addIngredientsMethod.classList.add("hidden");
+removeIngredientsMethod.classList.add("hidden");
+
 console.log(ingredientList)
+
+addIngredientsToRecipe.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    addIngredientsMethod.classList.remove('hidden');
+    removeIngredientsMethod.classList.add('hidden');
+})
+
+removeIngredientsFromRecipe.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    removeIngredientsMethod.classList.remove('hidden');
+    addIngredientsMethod.classList.add('hidden');
+})
 
 checkIngredientsForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -116,8 +139,6 @@ checkIngredientsForm.addEventListener('submit', (event) => {
     addIngredients.classList.add('hidden');
     createIngredients.classList.add('hidden');
 
-
-
     addIngredientsForm.addEventListener('submit', (e) => {
         e.preventDefault()
 
@@ -159,4 +180,48 @@ checkIngredientsForm.addEventListener('submit', (event) => {
             addIngredientsForm.submit();
         }
     })
+})
+
+let removeIngredients = document.getElementById('remove-ingredients')
+let ingredientCheckbox = document.querySelector("#ingredient-checkbox");
+
+let checkboxButton = document.querySelector("#checkbox-button");
+
+checkboxButton.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    let removeInput = document.getElementById("remove-input")
+
+    let checkboxIngredients = ""
+
+    for (i = 0; i < ingredientCheckbox.childElementCount; i++) {
+        let input = ingredientCheckbox.children[i].querySelector(".checkbox-input").checked;
+        let ingredientName = ingredientCheckbox.children[i]
+            .querySelector(".checkbox-label").innerText;
+
+        if (!checkboxIngredients) {
+            checkboxIngredients = ingredientName
+        } else {
+            checkboxIngredients += ", " + ingredientName
+        }
+        
+        if (input) {
+            if (!removeInput.value) {
+                removeInput.value = ingredientName
+            } else {
+                removeInput.value += ', ' + ingredientName
+            }
+        }
+
+        if (removeInput.value === checkboxIngredients) {
+            console.warn("You can't delete all ingredients.")
+        } else if (!removeInput.value) {
+            console.warn("You have to select one or more ingredients.")
+        } else {
+            removeIngredients.submit()
+        }
+    }
+
+    //removeIngredients.submit()
+
 })

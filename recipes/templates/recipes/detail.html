@@ -43,7 +43,7 @@
                     </div>
                     <a href="{% url 'recipes:search' %}" class="header-menu__item">
                         <img 
-                            src="../../../media/magnifying_glass.png" 
+                            src="/media/magnifying_glass.png" 
                             class="magnifying-glass"
                         >
                     </a>
@@ -61,7 +61,7 @@
                         {% endif %}
                         <a href="{% url 'recipes:search' %}" class="header-menu__item">
                             <img 
-                                src="../../../media/magnifying_glass.png" 
+                                src="/media/magnifying_glass.png" 
                                 class="magnifying-glass"
                             >
                         </a>
@@ -119,15 +119,17 @@
             </div>
             <div class="ingredients">
                 <p class="details__item">Ingredients: </p>
-                <a href="update_recipe_ingredients/">Edit ingredients</a>       
-                    {% for ingredient in object.ingredients.all %}
-                        <a 
-                            href="{% url 'ingredients:ingredient_list' %}{{ingredient.id}}"
-                            class="ingredient-in__recipe"
-                            >
-                                {{ingredient.name}}
-                        </a>
-                    {% endfor %}
+                {% if object.creator.user_info.username %}
+                    <a href="update_recipe_ingredients/">Edit ingredients</a>
+                {% endif %}       
+                {% for ingredient in object.ingredients.all %}
+                    <a 
+                        href="{% url 'ingredients:ingredient_list' %}{{ingredient.id}}"
+                        class="ingredient-in__recipe"
+                        >
+                            {{ingredient.name}}
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </body>

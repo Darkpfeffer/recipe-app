@@ -7,48 +7,88 @@
     </head>
     <body>
         <h1>Edit: {{recipe.name}} ingredients</h1>
-        <h3>Ingredients already present in the recipe: </h3>
-        <h3 id="used-ingredients">
-            {% for ingredient in recipe.ingredients.all %}
-                {% if not forloop.last %}
-                    {{ingredient.name}}, 
-                {% else %}
-                    {{ingredient.name}}
-                {% endif %}
-            {% endfor %}
-        </h3>
-        <form id="check-ingredients-form">
-            <label for="check-ingredients">
-                Ingredients you would like to add: 
-            </label>
-            <input name="check-ingredients" id="check-ingredients">
-            <button type="button" id="check-button">Check ingredients</button>
+        <button type="button" id="add-ingredients__to--recipe">
+            Add ingredients
+        </button>
+        <button type="button" id="remove-ingredients__from--recipe">
+            Remove ingredients
+        </button>
+        <div id="ingredients-from__recipe">
             <p>
-                Write every ingredient you would like to add separated with 
-                comma (,) and space( ).
+                Choose ingredients to remove from the recipe:<br>
+                You can not select all of the ingredients.
             </p>
-        </form>
-        <form 
-            method="post" action="" 
-            enctype="multipart/form-data" id="add-ingredients__form"
-        >
-            {% csrf_token %}
-            <input name="add-ingredients" id="add-ingredients">
-            <input name="create-ingredients" id="create-ingredients">
-            <div id="added-forms"></div>
-            <button id="add-ingredients__button" type="submit">
-                Add ingredient
+            <div id="ingredient-checkbox">
+                {% for ingredient in recipe.ingredients.all %}
+                <div>
+                    <input 
+                        type="checkbox" id="{{ingredient.name}}" 
+                        class="checkbox-input"
+                    >
+                    <label 
+                        for="check-{{ingredient.name}}" class="checkbox-label"
+                    >
+                        {{ingredient.name}}
+                    </label>
+                    <br>
+                </div>
+                {% endfor %}
+            </div>
+            <button id="checkbox-button" type="button">
+                Remove ingredients
             </button>
-        </form>
-        <p id="ingredient-list">
-            {% for ingredient in all_ingredients %}
-                {% if not forloop.last %}
-                    {{ingredient.name}}, 
-                {% else %}
-                    {{ingredient.name}}
-                {% endif %}
-            {% endfor %}
-        </p>
+            <form 
+                method="post" action="" name="remove-ingredients"
+                id="remove-ingredients"
+            >
+                {% csrf_token %}
+                <input name="remove-input" id="remove-input" class="hidden">
+            </form>
+        </div>
+        <div id="ingredients-to__recipe">
+            <h3>Ingredients already present in the recipe: </h3>
+            <h3 id="used-ingredients">
+                {% for ingredient in recipe.ingredients.all %}
+                    {% if not forloop.last %}
+                        {{ingredient.name}}, 
+                    {% else %}
+                        {{ingredient.name}}
+                    {% endif %}
+                {% endfor %}
+            </h3>
+            <form id="check-ingredients-form">
+                <label for="check-ingredients">
+                    Ingredients you would like to add: 
+                </label>
+                <input name="check-ingredients" id="check-ingredients">
+                <button type="button" id="check-button">Check ingredients</button>
+                <p>
+                    Write every ingredient you would like to add separated with 
+                    comma (,) and space( ).
+                </p>
+            </form>
+            <form 
+                method="post" action="" 
+                enctype="multipart/form-data" id="add-ingredients__form"
+            >
+                {% csrf_token %}
+                <input name="add-ingredients" id="add-ingredients">
+                <input name="create-ingredients" id="create-ingredients">
+                <div id="added-forms"></div>
+                <button id="add-ingredients__button" type="submit">
+                    Add ingredient
+                </button>
+            </form>
+            <p id="ingredient-list">
+                {% for ingredient in all_ingredients %}
+                    {% if not forloop.last %}
+                        {{ingredient.name}}, 
+                    {% else %}
+                        {{ingredient.name}}
+                    {% endif %}
+                {% endfor %}
+            </p>
+        </div>
         <script src="{% static 'js/edit-ingredients.js' %}"></script>
     </body>
 </html>

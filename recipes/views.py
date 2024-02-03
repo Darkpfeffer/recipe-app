@@ -72,20 +72,36 @@ class UpdateRecipeView(LoginRequiredMixin, UpdateView):
 class UpdateRecipeIngredients(LoginRequiredMixin, View):
     def get(self, request, pk):
         recipe = Recipe.objects.get(id = pk)
+        user = User.objects.get(user_info__id = self.request.user.id)
         all_ingredients = Ingredient.objects.all()
 
         context = {
             "recipe": recipe,
             "all_ingredients": all_ingredients
         }
+
+        if user.id == recipe.creator.id:
+            return render(request, 'recipes/update_recipe_ingredients.html', context)
+        else:
+            return redirect('/recipes/list/' + pk + '/')
         
-        return render(request, 'recipes/update_recipe_ingredients.html', context)
-    
     def post(self, request, pk):
         recipe = Recipe.objects.get(id = pk)
 
-        add_ingredients = request.POST.get('add-ingredients').split(', ')
-        create_ingredients = request.POST.get('create-ingredients').split(', ')
+        try:
+            add_ingredients = request.POST.get('add-ingredients').split(', ')
+        except:
+            add_ingredients = None
+
+        try:
+            create_ingredients = request.POST.get('create-ingredients').split(', ')
+        except:
+            create_ingredients = None
+
+        try:
+            remove_ingredients = request.POST.get('remove-input').split(', ')
+        except:
+            remove_ingredients = None
 
         if add_ingredients or create_ingredients:
             if len(add_ingredients[0]) > 0:
@@ -126,6 +142,20 @@ class UpdateRecipeIngredients(LoginRequiredMixin, View):
                     add_ingredient.recipe_appearance.add(recipe)
 
                     add_ingredient.save()
+
+        if remove_ingredients:
+
+            for ingredient in remove_ingredients:
+                remove_ingredient = Ingredient.objects.get( name = ingredient)
+
+                recipe.ingredients.remove(remove_ingredient)
+                remove_ingredient.recipe_appearance.remove(recipe)
+
+                recipe.save()
+                remove_ingredient.save()
+                
+                if remove_ingredient.recipe_appearance.count() == 0:
+                    remove_ingredient.delete()
 
         return redirect('/recipes/list/' + pk + '/')
     
