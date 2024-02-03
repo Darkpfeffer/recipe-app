@@ -119,7 +119,7 @@
             </div>
             <div class="ingredients">
                 <p class="details__item">Ingredients: </p>
-                {% if object.creator.user_info.username %}
+                {% if user.username == object.creator.user_info.username %}
                     <a href="update_recipe_ingredients/">Edit ingredients</a>
                 {% endif %}       
                 {% for ingredient in object.ingredients.all %}
