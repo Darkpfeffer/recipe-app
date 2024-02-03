@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from recipe_project.views import profile_absolute_url, user_absolute_url
 from django.contrib.auth.models import User as UserAuth
+from recipes.models import Recipe
 from .models import User
 # Create your views here.
 
@@ -46,3 +47,25 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         context["profile_url"] = profile_url
 
         return context
+
+def delete_user_view(request, pk):
+    user = User.objects.get(id = pk)
+    userAuth = UserAuth.objects.get(id = user.user_info.id)
+    recipe = Recipe.objects.filter(creator = user)
+
+    if request.method == 'POST':
+        user_confirmation = request.POST.get('delete-checkbox')
+        if user_confirmation:
+            for created_recipe in recipe.all():
+                created_recipe.creator = None
+                created_recipe.save()
+
+            user.delete() 
+            userAuth.delete()  
+
+        return redirect('recipes:home')         
+
+    if userAuth == request.user:
+        return render(request, 'users/delete_user.html')
+    else:
+        return redirect('/profile/'+ str(user.id))

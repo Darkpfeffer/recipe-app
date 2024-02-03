@@ -12,6 +12,7 @@
             {% for favorite in object.favorite_recipes.all%}
                 <p>{{favorite}}</p>
             {% endfor %}
+            <a href="{{object.id}}/delete/">Delete profile</a>
         {% endif %}
     </body>
 </html>

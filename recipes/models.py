@@ -20,6 +20,7 @@ class Recipe(models.Model):
     creator = models.ForeignKey(
         'users.User', 
         blank=True,
+        null=True,
         on_delete=models.PROTECT
     )
     recipe_directions = models.TextField(default="No directions added.")
