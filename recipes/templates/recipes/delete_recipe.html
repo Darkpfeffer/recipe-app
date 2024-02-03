@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <body>
+        <p>Are you sure you would like to delete this recipe?</p>
+        <button type="button" id="yes-button">Yes</button>
+        <button type="button" id="no-button">No</button>
+        <form method="post" action="" id="delete-form">
+            {% csrf_token %}
+            <input type="checkbox" name="delete-checkbox" id="delete-checkbox">
+        </form>
+        <script src="{% static 'js/delete_recipe.js' %}"></script>
+    </body>
+</html>

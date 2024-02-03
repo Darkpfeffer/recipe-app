@@ -19,7 +19,8 @@ class User(models.Model):
     )
     profile_pic = models.ImageField(
         upload_to='users',
-        default='no_picture.jpg'
+        default='no_picture.jpg',
+        blank=True
     )
 
     def __str__(self):

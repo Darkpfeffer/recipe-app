@@ -158,7 +158,47 @@ class UpdateRecipeIngredients(LoginRequiredMixin, View):
                     remove_ingredient.delete()
 
         return redirect('/recipes/list/' + pk + '/')
-    
+
+class DeleteRecipe(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        recipe = Recipe.objects.get(id = pk)
+        user = User.objects.get(user_info__id = self.request.user.id)
+
+        if user.id == recipe.creator.id:
+            return render(request, 'recipes/delete_recipe.html')
+        else:
+            return redirect('/recipes/list/' + pk + '/')
+
+
+    def post(self, request, pk):   
+        recipe = Recipe.objects.get(id = pk)
+        user = User.objects.get(id = recipe.creator.id)
+        favorite_lists = User.objects.filter(favorite_recipes = recipe)
+
+        user_confirmation = self.request.POST.get('delete-checkbox')
+
+        if user_confirmation:
+            for favorite in favorite_lists:
+                favorite.favorite_recipes.remove(recipe)
+
+            for ingredient in recipe.ingredients.all():
+                ingredient.recipe_appearance.remove(recipe)
+                ingredient.save()
+
+                if ingredient.recipe_appearance.count() == 0:
+                        ingredient.delete()
+
+            user.created_recipes.remove(recipe)
+            user.save()
+
+            recipe.delete()
+
+        return redirect('recipes:recipe_list')
+
+
+
+
+
 @login_required
 def search_view(request):
     form = SearchForm( request.POST or None )

@@ -79,6 +79,7 @@
                     <h3 class="details__item">Details: {{object.name}}</h3>
                     {% if user.username == object.creator.user_info.username %}
                         <a href="update_recipe/">Edit recipe</a>
+                        <a href="delete_recipe/">Delete recipe</a>
                     {% endif %}
                     <img src="{{object.pic.url}}" class="details__item details__pic">
                     <p class="details__item">

@@ -23,7 +23,9 @@ searchButton.addEventListener("click", (event) => {
     event.preventDefault();
 
     //Declaring local variables
-    let searchIngredientForm = document.querySelector("#search-ingredient-form");
+    let searchIngredientForm = document.querySelector(
+        "#search-ingredient-form"
+    );
     let searchedIngredients = document.querySelector(".searching-ingredient")
         .value.toLowerCase().split(", ");
     let temporaryIngredients = [];
@@ -159,6 +161,7 @@ ingrFormButton.addEventListener('click', (event) => {
 
     let ingredientsToDatabase = document.querySelectorAll(".missing");
     let currentIngredient = ingredientsToDatabase[0];
+    let ingredientNameContainer = document.querySelector("#ingredient-name");
     let ingredientNameInput = document.querySelector("#id_name");
     let ingredientPriceInput= document.querySelector("#id_price");
     let ingredientUnitInput= document.querySelector("#id_ingredient_unit_type");

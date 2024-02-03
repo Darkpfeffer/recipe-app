@@ -31,10 +31,8 @@
                 <label for="name">Name: <span id="ingredient-name"></span></label>
                 {{ingr_form.name}}<br>
                 <label for="price">Price: </label>
-                {{ingr_form.price}}$   
+                {{ingr_form.price}}$/{{ingr_form.ingredient_unit_type}}<br>
                 <p id="create-ingredient__error"></p>
-                <label for="ingredient_unit_type">Type: </label>
-                {{ingr_form.ingredient_unit_type}}<br>
                 <button id="ingredient-form__button">Save ingredient</button>
             </form>
         </div>
