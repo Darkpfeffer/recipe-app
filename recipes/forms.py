@@ -27,17 +27,9 @@ class SearchForm(forms.Form):
 class CreateRecipeForm(forms.Form):
     name = forms.CharField(max_length=120)
     cooking_time = forms.IntegerField()
-    ingredients = forms.ModelMultipleChoiceField(
-        queryset = Ingredient.objects.all(),
-        widget = forms.CheckboxSelectMultiple
-    )
-    ingredient_quantities = forms.CharField(
-        max_length = 2000, 
-        widget= forms.Textarea(attrs={'rows': 5, 'cols': 40}),
-        help_text='Add quantities of the ingredients in the format: ' + 
-        '100, 50')
     recipe_directions = forms.CharField(
         widget= forms.Textarea(attrs={'rows': 5, 'cols': 40}), 
+        max_length= 5000,
         required=False
     )
     pic = forms.ImageField(required=False)

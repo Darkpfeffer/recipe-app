@@ -1,14 +1,16 @@
 from django.test import TestCase
 from .models import Ingredient
+from .forms import CreateIngredientForm
 from django.contrib.auth import get_user_model
 from recipes.models import Recipe
 from users.models import User
+import tempfile
 
 # Create your tests here.
 
 class IngredientModelTest(TestCase):
     def setUpTestData():
-        Ingredient.objects.create(
+        test_ingredient = Ingredient.objects.create(
             name = "salt",
             price = 0.50,
             ingredient_unit_type = "kilogram",
@@ -19,32 +21,20 @@ class IngredientModelTest(TestCase):
             username = 'testuser', password='secret'
         )
 
-        User.objects.create(
-            username = user,
-            name = "Erik Vasquez",
-            email = "vasquez@example.com",
-            birthday = "1212-12-12"
+        test_user = User.objects.create(
+            user_info = user
         )
 
         test_user = User.objects.get(id=1)
-
-        test_ingredient_query = Ingredient.objects.filter(id=1)
-
-        test_ingredient = Ingredient.objects.get(id=1)
         
         Recipe.objects.create(
             name = "Hot Dog",
             cooking_time = "5",
-            ingredient_quantities = ((100, 'gram'), (50, 'gram'),\
-                                      (20, 'milliliter'), (20, 'milliliter'), \
-                                        (10, 'gram')),
             difficulty = "Intermediate",
-            creator_id = test_user
+            creator = test_user
         )
 
         test_recipe = Recipe.objects.get(id=1)
-
-        test_recipe.ingredients.set(test_ingredient_query)
 
         test_ingredient.recipe_appearance.add(test_recipe)
 
@@ -87,3 +77,54 @@ class IngredientModelTest(TestCase):
         ingredient = Ingredient.objects.get(id = 1)
 
         self.assertEqual(ingredient.get_absolute_url(), '/ingredients/list/1')
+
+class IngredientFormTest(TestCase):
+    def test_ingredient_form_is_valid(self):
+        form = CreateIngredientForm(
+            data = {
+                'name': 'Test name',
+                'price': '13',
+                'ingredient_unit_type': 'kilogram',
+                'pic': tempfile.NamedTemporaryFile(suffix=".jpg").name
+            }
+        )
+
+        self.assertTrue(form.is_valid())
+
+    def test_ingredient_form_name_is_not_valid(self):
+        form = CreateIngredientForm(
+            data = {
+                'name': 'Test nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasdTest nameasdasdasdasdasdasdasd',
+                'price': '13',
+                'ingredient_unit_type': 'kilogram',
+                'pic': tempfile.NamedTemporaryFile(suffix=".jpg").name
+            }
+        )
+
+        self.assertFalse(form.is_valid())
+
+    def test_ingredient_form_price_is_not_valid(self):
+
+        form = CreateIngredientForm(
+            data = {
+                'name': 'Test name',
+                'price': 'asd',
+                'ingredient_unit_type': 'kilogram',
+                'pic': tempfile.NamedTemporaryFile(suffix=".jpg").name
+            }
+        )
+
+        self.assertFalse(form.is_valid())
+
+    def test_ingredient_form_ingredient_unit_type_is_not_valid(self):
+
+        form = CreateIngredientForm(
+            data = {
+                'name': 'Test name',
+                'price': '13',
+                'ingredient_unit_type': 'gram',
+                'pic': tempfile.NamedTemporaryFile(suffix=".jpg").name
+            }
+        )
+
+        self.assertFalse(form.is_valid())

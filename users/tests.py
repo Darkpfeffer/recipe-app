@@ -11,80 +11,43 @@ class UserModelTest(TestCase):
             username = 'testuser', password='secret'
         )
         
-        User.objects.create(
-            username = user,
-            name = "Erik Vasquez",
-            email = "vasquez@example.com",
-            birthday = "1212-12-12",
-            profile_pic = 'no_picture.jpg'
+        test_user = User.objects.create(
+            user_info = user
         )
 
-        user_object = User.objects.get(id=1)
-
-        Ingredient.objects.create(
+        test_ingredient = Ingredient.objects.create(
             name = "salt",
             price = 0.50,
             ingredient_unit_type = "kilogram"
         )
 
-        Recipe.objects.create(
+        test_recipe1 = Recipe.objects.create(
             name = 'Test recipe',
             cooking_time = 5,
-            ingredient_quantities = ((100, 'gram'), (50, 'gram'), 
-                                     (20, 'milliliter')),
             difficulty = "Intermediate",
-            creator_id = user_object
+            creator = test_user
         )
 
-        Recipe.objects.create(
+        test_recipe2 =Recipe.objects.create(
             name = 'Test recipe2',
             cooking_time = 5,
-            ingredient_quantities = ((100, 'gram'), (50, 'gram'), 
-                                     (20, 'milliliter')),
             difficulty = "Intermediate",
-            creator_id = user_object
+            creator = test_user
         )
 
-        ingredient_object_query = Ingredient.objects.filter(id=1)
+        test_recipe1.ingredients.add(test_ingredient)
 
-        recipe_object = Recipe.objects.get(id=1)
+        test_recipe2.ingredients.add(test_ingredient)
 
-        recipe_object2 = Recipe.objects.get(id=2)
-
-        recipe_object.ingredients.set(ingredient_object_query)
-
-        recipe_object2.ingredients.set(ingredient_object_query)
-
-        user_object.favorite_recipes.add(recipe_object, recipe_object2)
+        test_user.favorite_recipes.add(test_recipe1, test_recipe2)
 
     def test_user_username(self):
         user = User.objects.get(id = 1)
 
-        field_label = user._meta.get_field('username').verbose_name
+        field_label = user._meta.get_field('user_info').verbose_name
 
-        self.assertEqual(field_label, 'username')
+        self.assertEqual(field_label, 'user info')
 
-    def test_user_name(self):
-        user = User.objects.get(id = 1)
-
-        field_label = user._meta.get_field('name').verbose_name
-
-        self.assertEqual(field_label, 'name')
-
-    def test_user_email(self):
-        user = User.objects.get(id = 1)
-
-        field_label = user._meta.get_field('email').verbose_name
-
-        self.assertEqual(field_label, 'email')
-
-    def test_user_birthday(self):
-        user = User.objects.get(id = 1)
-
-        field_label = user._meta.get_field('birthday').verbose_name
-
-        self.assertEqual(field_label, 'birthday')
-        
     def test_user_favorite_recipes(self):
         user = User.objects.get(id = 1)
 
