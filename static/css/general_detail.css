@@ -38,6 +38,12 @@
     margin-left: 3vw;
 }
 
+.details__container a, .details__container a:visited {
+    margin-top: 0.8em;
+    color: black;
+    padding: 0.3em 0;
+}
+
 .details__item {
     padding-top: 0.3em;
 }

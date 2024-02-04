@@ -1,14 +1,90 @@
 <!DOCTYPE html>
-{% load static %}
 <html>
+    <head>
+        {% load static %}
+        <title>Delete user - Recipe App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" contect="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/media/favicon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'css/general_pages_settings.css' %}" type="text/css" rel="stylesheet">
+        <link href="{% static 'css/auth_styles.css' %}" type="text/css" rel="stylesheet">
+    </head>
     <body>
-        <p>Are you sure you would like to delete your account?</p>
-        <button type="button" id="yes-button">Yes</button>
-        <button type="button" id="no-button">No</button>
-        <form method="post" action="" id="delete-form">
-            {% csrf_token %}
-            <input type="checkbox" name="delete-checkbox" id="delete-checkbox">
-        </form>
+        <header>
+            <div class="header-content">
+                <div class="header__logo--name">
+                    <a href="{% url 'recipes:home' %}">
+                        <img 
+                            src="/media/app-icon.png" 
+                            rel="app icon" 
+                            class="header-icon"
+                        >
+                    </a>
+                    <a href="{% url 'recipes:home' %}">
+                        <h3>Recipe app</h3>
+                    </a>
+                </div>
+                <div class="desktop header-menu">
+                    <div class="header-menu__item">
+                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
+                    </div>
+                    <div class="header-menu__item">
+                        {% if user.is_authenticated %}
+                            <a href="/profile/{{profile.id}}">Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                        <img 
+                            src="/media/Diagram.png" 
+                            class="diagram"
+                        >
+                    </a>
+                </div>
+                <!-- mobile view -->
+                <div class="mobile header-mobile">
+                    <div id="myLinks">
+                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
+                        {% if user.is_authenticated %}
+                            <a href="{{profile_url}}">Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                        <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                            <img 
+                                src="/media/Diagram.png" 
+                                class="diagram"
+                            >
+                        </a>
+                    </div>
+                    <!-- Hamburger menu to toggle the navigation links -->
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </div>  
+        </header>
+        <div class="all-container">
+            <div class="all-content">
+                <p>Are you sure you would like to delete your account?</p>
+                <button type="button" id="yes-button" class="primary-button">Yes</button>
+                <button type="button" id="no-button" class="secondary-button">No</button>
+                <form method="post" action="" id="delete-form" class="hidden">
+                    {% csrf_token %}
+                    <input type="checkbox" name="delete-checkbox" id="delete-checkbox">
+                </form>
+            </div>  
+        </div>
+        <script src="{% static 'js/general.js' %}"></script>
         <script src="{% static 'js/delete_confirmation.js' %}"></script>
     </body>
 </html>

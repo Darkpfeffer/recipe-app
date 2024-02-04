@@ -1,94 +1,171 @@
 <!DOCTYPE html>
-{% load static %}
 <html>
     <head>
-        <title>Update recipe ingredients - Recipe app</title>
-        <link href="{% static 'css/general_list.css' %}" type="text/css" rel="stylesheet">
+        {% load static %}
+        <title>Edit recipe ingredients - Recipe App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" contect="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/media/favicon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'css/general_pages_settings.css' %}" type="text/css" rel="stylesheet">
+        <link href="{% static 'css/auth_styles.css' %}" type="text/css" rel="stylesheet">
     </head>
     <body>
-        <h1>Edit: {{recipe.name}} ingredients</h1>
-        <button type="button" id="add-ingredients__to--recipe">
-            Add ingredients
-        </button>
-        <button type="button" id="remove-ingredients__from--recipe">
-            Remove ingredients
-        </button>
-        <div id="ingredients-from__recipe">
-            <p>
-                Choose ingredients to remove from the recipe:<br>
-                You can not select all of the ingredients.
-            </p>
-            <div id="ingredient-checkbox">
-                {% for ingredient in recipe.ingredients.all %}
-                <div>
-                    <input 
-                        type="checkbox" id="{{ingredient.name}}" 
-                        class="checkbox-input"
-                    >
-                    <label 
-                        for="check-{{ingredient.name}}" class="checkbox-label"
-                    >
-                        {{ingredient.name}}
-                    </label>
-                    <br>
+        <header>
+            <div class="header-content">
+                <div class="header__logo--name">
+                    <a href="{% url 'recipes:home' %}">
+                        <img 
+                            src="/media/app-icon.png" 
+                            rel="app icon" 
+                            class="header-icon"
+                        >
+                    </a>
+                    <a href="{% url 'recipes:home' %}">
+                        <h3>Recipe app</h3>
+                    </a>
                 </div>
-                {% endfor %}
-            </div>
-            <button id="checkbox-button" type="button">
-                Remove ingredients
-            </button>
-            <form 
-                method="post" action="" name="remove-ingredients"
-                id="remove-ingredients"
-            >
-                {% csrf_token %}
-                <input name="remove-input" id="remove-input" class="hidden">
-            </form>
-        </div>
-        <div id="ingredients-to__recipe">
-            <h3>Ingredients already present in the recipe: </h3>
-            <h3 id="used-ingredients">
-                {% for ingredient in recipe.ingredients.all %}
-                    {% if not forloop.last %}
-                        {{ingredient.name}}, 
-                    {% else %}
-                        {{ingredient.name}}
-                    {% endif %}
-                {% endfor %}
-            </h3>
-            <form id="check-ingredients-form">
-                <label for="check-ingredients">
-                    Ingredients you would like to add: 
-                </label>
-                <input name="check-ingredients" id="check-ingredients">
-                <button type="button" id="check-button">Check ingredients</button>
-                <p>
-                    Write every ingredient you would like to add separated with 
-                    comma (,) and space( ).
-                </p>
-            </form>
-            <form 
-                method="post" action="" 
-                enctype="multipart/form-data" id="add-ingredients__form"
-            >
-                {% csrf_token %}
-                <input name="add-ingredients" id="add-ingredients">
-                <input name="create-ingredients" id="create-ingredients">
-                <div id="added-forms"></div>
-                <button id="add-ingredients__button" type="submit">
-                    Add ingredient
+                <div class="desktop header-menu">
+                    <div class="header-menu__item">
+                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
+                    </div>
+                    <div class="header-menu__item">
+                        {% if user.is_authenticated %}
+                            <a href="{{profile_url}}">Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                        <img 
+                            src="/media/Diagram.png" 
+                            class="diagram"
+                        >
+                    </a>
+                </div>
+                <!-- mobile view -->
+                <div class="mobile header-mobile">
+                    <div id="myLinks">
+                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
+                        {% if user.is_authenticated %}
+                            <a href="{{profile_url}}">Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                        <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                            <img 
+                                src="/media/Diagram.png" 
+                                class="diagram"
+                            >
+                        </a>
+                    </div>
+                    <!-- Hamburger menu to toggle the navigation links -->
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </div>  
+        </header>
+        <div class="all-container">
+            <div class="all-content">
+                {% if user.username == recipe.creator.user_info.username %}
+                
+                <h3>Edit: {{recipe.name}} ingredients</h3>
+                <button type="button" id="add-ingredients__to--recipe" class="primary-button">
+                    Add ingredients
                 </button>
-            </form>
-            <p id="ingredient-list">
-                {% for ingredient in all_ingredients %}
-                    {% if not forloop.last %}
-                        {{ingredient.name}}, 
-                    {% else %}
-                        {{ingredient.name}}
-                    {% endif %}
-                {% endfor %}
-            </p>
+                <button type="button" id="remove-ingredients__from--recipe" class="primary-button">
+                    Remove ingredients
+                </button>
+                <div id="ingredients-from__recipe">
+                    <p>
+                        Choose ingredients to remove from the recipe:<br>
+                        You can not select all of the ingredients.
+                    </p>
+                    <div id="ingredient-checkbox">
+                        {% for ingredient in recipe.ingredients.all %}
+                        <div>
+                            <input 
+                                type="checkbox" id="{{ingredient.name}}" 
+                                class="checkbox-input"
+                            >
+                            <label 
+                                for="check-{{ingredient.name}}" class="checkbox-label"
+                            >
+                                {{ingredient.name}}
+                            </label>
+                            <br>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button id="checkbox-button" type="button" class="primary-button">
+                        Remove ingredients
+                    </button>
+                    <form 
+                        method="post" action="" name="remove-ingredients"
+                        id="remove-ingredients"
+                    >
+                        {% csrf_token %}
+                        <input name="remove-input" id="remove-input" class="hidden">
+                    </form>
+                </div>
+                <div id="ingredients-to__recipe">
+                    <h3>Ingredients already present in the recipe: </h3>
+                    <h3 id="used-ingredients">
+                        {% for ingredient in recipe.ingredients.all %}
+                            {% if not forloop.last %}
+                                {{ingredient.name}}, 
+                            {% else %}
+                                {{ingredient.name}}
+                            {% endif %}
+                        {% endfor %}
+                    </h3>
+                    <form id="check-ingredients-form">
+                        <label for="check-ingredients">
+                            Ingredients you would like to add: 
+                        </label>
+                        <input name="check-ingredients" id="check-ingredients">
+                        <button type="button" id="check-button" class="primary-button">Check ingredients</button>
+                        <p>
+                            Write every ingredient you would like to add separated with 
+                            comma (,) and space( ).
+                        </p>
+                    </form>
+                    <form 
+                        method="post" action="" 
+                        enctype="multipart/form-data" id="add-ingredients__form"
+                    >
+                        {% csrf_token %}
+                        <input name="add-ingredients" id="add-ingredients">
+                        <input name="create-ingredients" id="create-ingredients">
+                        <div id="added-forms"></div>
+                        <button id="add-ingredients__button" type="submit" class="primary-button">
+                            Add ingredient
+                        </button>
+                    </form>
+                    <p id="ingredient-list">
+                        {% for ingredient in all_ingredients %}
+                            {% if not forloop.last %}
+                                {{ingredient.name}}, 
+                            {% else %}
+                                {{ingredient.name}}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+                {% else %}
+                    <p>You are not authorized to update this recipe.</p>
+                {% endif %}
+            </div>  
         </div>
+        <script src="{% static 'js/general.js' %}"></script>
         <script src="{% static 'js/edit-ingredients.js' %}"></script>
     </body>
 </html>

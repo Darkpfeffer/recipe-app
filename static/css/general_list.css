@@ -10,6 +10,12 @@
     margin-right: auto;
 }
 
+.main__list a, .main__list a:visited {
+    margin-top: 0.8em;
+    color: black;
+    padding: 0.3em 0;
+}
+
 .searchbar-container {
     display: inherit;
     border: 1px solid black;

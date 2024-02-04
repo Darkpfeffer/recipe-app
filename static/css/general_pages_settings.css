@@ -94,6 +94,41 @@ header {
     width: 12em;
 }
 
+.primary-button {
+    background-color: #ff9f94;
+    border-radius: 1em;
+    border: 1px solid black;
+    padding: 0.5em 1em;
+}
+
+.primary-button:hover {
+    transition-duration: 1s;
+    background-color: #cc6054;
+}
+
+.primary-button:active {
+    transition-duration: 1s;
+    background-color: #d42b2b;
+}
+
+.secondary-button {
+    background-color: #888888;
+    border-radius: 1em;
+    border: 1px solid black;
+    margin-top: 1em;
+    padding: 0.5em 1em;
+}
+
+.secondary-button:hover {
+    transition-duration: 1s;
+    background-color: #b1afaf;
+}
+
+.secondary-button:active {
+    transition-duration: 1s;
+    background-color: #c4c4c4;
+}
+
 /* header style end */
 
 @media all and (min-width: 1920px) {

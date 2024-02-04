@@ -122,6 +122,8 @@
                 <p class="details__item">Ingredients: </p>
                 {% if user.username == object.creator.user_info.username %}
                     <a href="update_recipe_ingredients/">Edit ingredients</a>
+                    <br>
+                    <br>
                 {% endif %}       
                 {% for ingredient in object.ingredients.all %}
                     <a 

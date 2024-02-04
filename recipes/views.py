@@ -75,9 +75,12 @@ class UpdateRecipeIngredients(LoginRequiredMixin, View):
         user = User.objects.get(user_info__id = self.request.user.id)
         all_ingredients = Ingredient.objects.all()
 
+        profile_url = profile_absolute_url(self.request)
+
         context = {
             "recipe": recipe,
-            "all_ingredients": all_ingredients
+            "all_ingredients": all_ingredients,
+            'profile_url': profile_url
         }
 
         if user.id == recipe.creator.id:
@@ -117,7 +120,7 @@ class UpdateRecipeIngredients(LoginRequiredMixin, View):
                     except:
                         print('Ingredient is not in the database.')
 
-            if create_ingredients:
+            if create_ingredients[0]:
                 for index, ingredient in enumerate(create_ingredients):
                     name = request.POST.get('ingredient_name' + str(index))
                     price = request.POST.get('ingredient_price' + str(index))
@@ -130,18 +133,23 @@ class UpdateRecipeIngredients(LoginRequiredMixin, View):
 
                     if not pic:
                         pic = 'no_picture.jpg'
+                    
 
-                    add_ingredient = Ingredient.objects.create(
-                        name = name,
-                        price = price,
-                        ingredient_unit_type = ingredient_unit_type,
-                        pic = pic
-                    )
+                    try:
+                        add_ingredient = Ingredient.objects.create(
+                            name = name,
+                            price = price,
+                            ingredient_unit_type = ingredient_unit_type,
+                            pic = pic
+                        )
 
-                    recipe.ingredients.add(add_ingredient)
-                    add_ingredient.recipe_appearance.add(recipe)
+                        recipe.ingredients.add(add_ingredient)
+                        add_ingredient.recipe_appearance.add(recipe)
 
-                    add_ingredient.save()
+                        add_ingredient.save()
+
+                    except:
+                        print('Add new ingredient failed.')
 
         if remove_ingredients:
 
@@ -164,8 +172,15 @@ class DeleteRecipe(LoginRequiredMixin, View):
         recipe = Recipe.objects.get(id = pk)
         user = User.objects.get(user_info__id = self.request.user.id)
 
+        profile_url = profile_absolute_url(self.request)
+
+        context = {
+            'recipe': recipe,
+            'profile_url': profile_url
+        }
+
         if user.id == recipe.creator.id:
-            return render(request, 'recipes/delete_recipe.html')
+            return render(request, 'recipes/delete_recipe.html', context)
         else:
             return redirect('/recipes/list/' + pk + '/')
 
@@ -334,11 +349,14 @@ def create_recipe_view(request):
                     created_recipe.ingredients.add(add_ingredient)
 
             return redirect('/recipes/list/' + str(created_recipe.id))
+    
+    profile_url = profile_absolute_url(request)
         
     context = {
         "all_ingredients" : all_ingredients,
         "ingr_form": ingr_form,
-        "rec_form": rec_form
+        "rec_form": rec_form,
+        'profile_url': profile_url
     }
 
     return render(request, 'recipes/create_recipe.html', context)
