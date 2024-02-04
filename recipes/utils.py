@@ -49,13 +49,26 @@ def get_chart(chart_type, model_choice, data, **kwargs):
     fig = plt.figure(figsize = (6,3))
 
     if chart_type == '#1' and model_choice == '#1':
-        ingredients = []
+        recipes = Recipe.objects.all()
 
-        print(data['ingredients'].count)
-        #for recipe in data['ingredients'].count():
-            #print(recipe)
+        all_difficulties = []
+        difficulty_types = []
+        difficulty_appearances = []
+
+
+        for recipe in recipes:
+            all_difficulties.append(recipe.difficulty)
+
+        for difficulty in all_difficulties:
+            if difficulty_types.__contains__(difficulty):
+                continue
+            else:
+                difficulty_types.append(difficulty)
+
+        for index, difficulty in enumerate(difficulty_types):
+            difficulty_appearances.append(all_difficulties.count(difficulty_types[index]))
         
-        plt.bar(data['name'], 1)
+        plt.bar(difficulty_types, difficulty_appearances)
 
     elif chart_type == '#2' and model_choice == '#2':
         recipes = Recipe.objects.all()

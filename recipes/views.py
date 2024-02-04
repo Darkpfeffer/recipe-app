@@ -249,7 +249,7 @@ def search_view(request):
                     chart_type, 
                     model_choice, 
                     search_df,
-                    labels = search_df['name']
+                    labels = search_df['difficulty']
                 )
                 
                 search_df = search_df.to_html(render_links=True)
