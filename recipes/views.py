@@ -223,7 +223,10 @@ def search_view(request):
 
                 search_df = pd.DataFrame(qs.values())
 
-                search_df['creator_id_id'] = search_df['creator_id_id'].apply(get_username_from_id)
+                try:
+                    search_df['creator'] = search_df['creator_id'].apply(get_username_from_id)
+                except:
+                    search_df['creator'] = 'Unknown'
 
                 search_df['url'] = protocol + current_host + search_df['id'].apply(make_clickable_recipe)
 
@@ -330,7 +333,7 @@ def create_recipe_view(request):
                     add_ingredient.recipe_appearance.add(created_recipe)
                     created_recipe.ingredients.add(add_ingredient)
 
-            return redirect('recipes:recipe_success')
+            return redirect('/recipes/list/' + str(created_recipe.id))
         
     context = {
         "all_ingredients" : all_ingredients,
@@ -339,6 +342,3 @@ def create_recipe_view(request):
     }
 
     return render(request, 'recipes/create_recipe.html', context)
-
-def recipe_success_view(request):
-    return render(request, 'recipes/create_recipe_success.html')

@@ -9,7 +9,7 @@ from ingredients.models import Ingredient
 #Write your functions here:
 
 def get_username_from_id(val):
-    username = User.objects.get(id = val).username
+    username = User.objects.get(id = val).user_info.username
 
     return username
 
@@ -49,11 +49,13 @@ def get_chart(chart_type, model_choice, data, **kwargs):
     fig = plt.figure(figsize = (6,3))
 
     if chart_type == '#1' and model_choice == '#1':
-        ingredient_quantities = []
-        for recipe in data['ingredient_quantities']:
-            ingredient_quantities.append(len(recipe.split('), ')))
+        ingredients = []
+
+        print(data['ingredients'].count)
+        #for recipe in data['ingredients'].count():
+            #print(recipe)
         
-        plt.bar(data['name'], ingredient_quantities)
+        plt.bar(data['name'], 1)
 
     elif chart_type == '#2' and model_choice == '#2':
         recipes = Recipe.objects.all()
