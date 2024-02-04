@@ -9,7 +9,7 @@ urlpatterns = [
     path('<pk>', ProfileDetailView.as_view(), name='profile'),
     path('update', include('django.contrib.auth.urls')),
     path('update/password', auth_views.PasswordChangeView.as_view(
-        success_url = reverse_lazy('users:password_change_done'),
+        success_url = reverse_lazy('recipes:home'),
         template_name = 'users/edit_password.html'), 
         name='edit_password'
     ),

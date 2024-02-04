@@ -22,11 +22,21 @@ class EditEmailView(LoginRequiredMixin, UpdateView):
 
         context["user"] = user
 
+        profile = User.objects.get(user_info = user)
+
+        context["profile"] = profile
+
         return context
     
 def edit_email_success_view(request):
 
-    return render(request, 'users/edit_email_success.html')
+    profile_url = profile_absolute_url(request)
+
+    context = {
+        "profile_url": profile_url
+    }
+
+    return render(request, 'users/edit_email_success.html', context)
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'users/profile.html'
