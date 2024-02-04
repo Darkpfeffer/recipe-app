@@ -27,36 +27,7 @@
             </p>
             <div id="check-all-ingredients">
             </div>
-            <form id="ingredient-form">
-                <label for="name">Name: <span id="ingredient-name"></span></label>
-                {{ingr_form.name}}<br>
-                <label for="price">Price: </label>
-                {{ingr_form.price}}$/{{ingr_form.ingredient_unit_type}}<br>
-                <p id="create-ingredient__error"></p>
-                <button id="ingredient-form__button">Save ingredient</button>
-            </form>
         </div>
-        
-        <form 
-            id="add-ingredients" 
-            action="" 
-            method="POST" 
-            class="hidden"  
-            enctype="multipart/form-data" 
-            novalidate
-        >
-            {% csrf_token %}
-            <textarea name="ingredient_inputs" cols="40" rows="5" required id="id_inputs"></textarea>
-        </form>
-            <p class="check-ingredient-list">
-                {% for ingredient in all_ingredients%}
-                    {% if not forloop.last %}
-                    {{ingredient.name}}, 
-                    {% else %}
-                    {{ingredient.name}}
-                    {% endif %}
-                {% endfor %}
-            </p>
         
         <form 
             id="recipe-form"
@@ -66,19 +37,36 @@
             enctype="multipart/form-data"
         >
             {% csrf_token %}
-            <label for="name">Name: </label>
-            {{rec_form.name}}<br>
-            <label for="cooking_time">Cooking Time: </label>
-            {{rec_form.cooking_time}}<br>
-            <label for="ingredients" id="ingredients-label">Ingredients: </label><br>
-            {{rec_form.ingredients}}
-            <input name ="ingredient_presence" id="ingredient_presence" class="hidden">
-            <label for="recipe_directions">Description: </label>
-            {{rec_form.recipe_directions}}<br>
-            <label for="pic">Picture: </label>
-            {{rec_form.pic}}<br>
-            <button type="submit">Create recipe</button>
+            <input name="ingredient_name_inputs" required id="id_name_inputs"/>
+            <div id="add-ingredient__form">
+
+            </div>
+            <div id="ingredient-error">
+                <p id="create-ingredient__error"></p>
+            </div>
+            <div id="create-recipe__form">
+                <label for="name">Recipe name: </label>
+                {{rec_form.name}}<br>
+                <p id="recipe-name__error" class="error-message"></p>
+                <label for="cooking_time">Cooking Time: </label>
+                {{rec_form.cooking_time}}<br>
+                <p id="recipe-cooking-time__error" class="error-message"></p>
+                <label for="recipe_directions">Description: </label>
+                {{rec_form.recipe_directions}}<br>
+                <label for="pic">Picture: </label>
+                {{rec_form.pic}}<br>
+            </div>
+            <button type="submit" id="create-recipe__button">Create recipe</button>
         </form>
+        <p class="check-ingredient-list">
+            {% for ingredient in all_ingredients%}
+                {% if not forloop.last %}
+                {{ingredient.name}}, 
+                {% else %}
+                {{ingredient.name}}
+                {% endif %}
+            {% endfor %}
+        </p>
         <script src="{% static 'js/create_recipe.js' %}"></script>
     </body>
 </html>

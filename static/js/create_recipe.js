@@ -1,19 +1,23 @@
 //Declare global variables
 let createIngredientsForm = document.querySelector(".create-ingredients");
 let IngredientResults = document.querySelector("#check-all-ingredients");
-let addIngredients = document.querySelector("#add-ingredients");
+let addIngredientsForm = document.getElementById("add-ingredient__form");
 let recipeForm = document.querySelector("#recipe-form");
+let sendIngredients = document.querySelector("#id_name_inputs");
 let checkIngredientsContainer =  document.querySelector(".check-ingredient-list");
 let checkIngredients = checkIngredientsContainer.innerText.toLowerCase().split(", ");
+
+let createRecipeForm = document.getElementById("create-recipe__form");
+let createRecipeButton = document.querySelector("#create-recipe__button");
 
 console.log(checkIngredients)
 //Buttons with event listeners
 let searchButton = document.querySelector(".search-button");
-let ingrFormButton = document.querySelector("#ingredient-form__button");
 // variable for JS requirement
 let jsAlert = document.querySelector(".js-alert");
 
 checkIngredientsContainer.classList.add("hidden");
+sendIngredients.classList.add("hidden")
 
 // Shows a text if JavaScript isn't active*/
 jsAlert.classList.add("hidden");
@@ -68,11 +72,53 @@ searchButton.addEventListener("click", (event) => {
 
             if (checkIngredients.includes(searchedIngredients[i])) {
                 selectIngredient.classList.add("existing");
+                if(sendIngredients.value === "") {
+                    sendIngredients.value += searchedIngredients[i]
+
+                } else {
+                    sendIngredients.value += ", " + searchedIngredients[i]
+                }
             }
             else {
                 selectIngredient.classList.add("missing");
-            }
+                if(sendIngredients.value === "") {
+                    sendIngredients.value += searchedIngredients[i]
 
+                } else {
+                    sendIngredients.value += ", " + searchedIngredients[i]
+                }
+                addIngredientsForm.innerHTML += `
+                <div class="hidden ingr-to__database">
+                    <label for="ingredient_name${i}">
+                        Ingredient name: ${searchedIngredients[i]}
+                    </label>
+                    <input 
+                        name="ingredient_name${i}" id="ingredient_name${i}" ` +
+                        `maxlength="120" value="${searchedIngredients[i]}"` + 
+                        `class="hidden" required
+                    ><br>
+                    <label for="ingredient_price${i}">
+                        Price: 
+                    </label>
+                    <input 
+                        name="ingredient_price${i}" id="ingredient_price${i}" ` +  
+                        `type="number" class="price-tag"
+                    ><span>$/</span>
+                    <select 
+                        name="ingredient_unit_type${i}" ` + 
+                        `id="ingredient_unit_type${i}" 
+                    >
+                        <option value="liter">Liter</option>
+                        <option value="kilogram">Kilogram</option>
+                    </select><br>
+                    <label for="ingredient_pic${i}">Picture: </label>
+                    <input 
+                        type="file" name="ingredient_pic${i}" ` +  
+                        `accept="image/*" id="ingredient_pic${i}"
+                    ><br>
+                </div>
+                `
+            }
         }
     }
 
@@ -87,115 +133,90 @@ searchButton.addEventListener("click", (event) => {
         createIngredientsForm.classList.remove("hidden")
     } else if (ingredientsToDatabase.length <= 0 && searchedIngredients[0]) {
         //Preparing for creating a new recipe
-        let ingredientsLabel = document.querySelector("#ingredients-label")
-        let chooseIngredients = document.querySelector("#id_ingredients").children
-        let ingredientIdContainer = ""
 
-        ingredientsLabel.innerText += `${searchedIngredients.join(", ")}`
-
-        document.querySelector("#id_ingredients").classList.add("hidden")
-
-        recipeForm.classList.remove("hidden")
-
-        for( i = 0; i < chooseIngredients.length; i++) {
-            let ingredientInnerText = chooseIngredients[i].firstElementChild
-            .innerText;
-
-            let ingredientName = ingredientInnerText.split(", ")[1]
-                .substring(7).toLowerCase();
-
-            let ingredientId = ingredientInnerText.split(", ")[0]
-                .substring(7).toLowerCase();
-
-            if (searchedIngredients.includes(ingredientName)) {
-                chooseIngredients[i].firstElementChild.firstElementChild
-                    .checked = true;
-                if (ingredientIdContainer === "") {
-                    ingredientIdContainer = String(ingredientId)
-                } else {
-                    ingredientIdContainer += `, ` + String(ingredientId)
-                }
-            }
-        }
-
-        let ingredientIdInput = document.querySelector("#ingredient_presence")
-        
-        ingredientIdInput.value = ingredientIdContainer
-        console.log(ingredientIdInput.value)
+        recipeForm.classList.remove("hidden");
+        createRecipeForm.classList.remove("hidden");
     }
 
     if (ingredientsToDatabase.length > 0) {
-        let currentIngredient = ingredientsToDatabase[0];
+        let currentForm = document.getElementsByClassName("ingr-to__database");
+        
+        recipeForm.classList.remove("hidden");
+        currentForm[0].classList.remove("hidden");
 
-        let ingredientName = currentIngredient.innerText;
-        let ingredientNameContainer = document.querySelector("#ingredient-name");
-
-        ingredientNameContainer.innerText = ingredientName;
-
-        let ingredientNameInput = document.querySelector("#id_name");
-
-        ingredientNameInput.value = ingredientName;
-
-        ingredientNameInput.classList.add("hidden")
-    }
-
-    for (i = 0; i < ingredientsToDatabase.length; i++) {
-        addIngredients.innerHTML += `<br><label for="pic${i}">Name: ${ingredientsToDatabase[i].innerText}<br> ` + 
-            `Picture: </label>` + 
-            `\n<input type="file" name="pic${i}" accept="image/*" id="id_pic${i}"><br>`
-
-        if (i === ingredientsToDatabase.length -1) {
-            addIngredients.innerHTML += `<p>Copy this list before you press the button: ` + 
-                ` ${searchedIngredients.join(", ")}</p>`
-            addIngredients.innerHTML += `<br><button type="submit">Add ingredients to the database</button>`
-            
-        }
+        createRecipeForm.classList.add("hidden");    
+        
+        createRecipeButton.innerText = "Add ingredient";
     }
 })
 
-let temporaryIngredientInput = [];
-
 //This button adds all the Ingredients to "ingr_to_database.inputs"
-ingrFormButton.addEventListener('click', (event) => {
+createRecipeButton.addEventListener('click', (event) => {
     event.preventDefault();
 
     let ingredientsToDatabase = document.querySelectorAll(".missing");
+    let currentForm = document.getElementsByClassName("ingr-to__database");
     let currentIngredient = ingredientsToDatabase[0];
-    let ingredientNameContainer = document.querySelector("#ingredient-name");
-    let ingredientNameInput = document.querySelector("#id_name");
-    let ingredientPriceInput= document.querySelector("#id_price");
-    let ingredientUnitInput= document.querySelector("#id_ingredient_unit_type");
+    let currentPriceTag;
     let errorMessage = document.querySelector("#create-ingredient__error");
 
-    if (ingredientsToDatabase.length > 0 && ingredientPriceInput.value !== "") {
-        errorMessage.innerText = ""
-        let currentIngredientInput = `${ingredientNameInput.value}, ` +
-        `${ingredientPriceInput.value}, ` + 
-        `${ingredientUnitInput.value}`
+    if (currentForm[0]) {
+        currentPriceTag = currentForm[0].querySelector(".price-tag");
+    }
 
-        temporaryIngredientInput.push(currentIngredientInput)
+    if (ingredientsToDatabase.length > 0 && currentPriceTag.value !== "") {
+        errorMessage.innerText = ""
 
         currentIngredient.classList.add("existing");
         currentIngredient.classList.remove("missing");
+
+        currentForm[0].classList.add("hidden");
+        currentForm[0].classList.remove("ingr-to__database");
+
+        currentForm = document.getElementsByClassName("ingr-to__database");
+        if (currentForm[0]) {
+            currentForm[0].classList.remove("hidden");
+        }
     } else {
-        errorMessage.innerText = "Price field needs to have value."
+        errorMessage.innerText = "Price field needs to have value.";
     }
 
     ingredientsToDatabase = document.querySelectorAll(".missing");
     currentIngredient = ingredientsToDatabase[0];
 
-    if (ingredientsToDatabase.length > 0) {
-        ingredientNameContainer.innerText = currentIngredient.innerText;
-        ingredientNameInput.value = currentIngredient.innerText;
-    }
-
-    ingredientPriceInput.value = "";
-
     if (ingredientsToDatabase.length === 0) {
         createIngredientsForm.classList.add("hidden");
-        let sendIngredients = document.querySelector("#id_inputs");
-        sendIngredients.classList.add("hidden");
-        addIngredients.classList.remove("hidden");
-        sendIngredients.value = temporaryIngredientInput.join("//, ");
+        createRecipeForm.classList.remove("hidden");
+
+        let ingredientError = document.getElementById("ingredient-error");
+        ingredientError.classList.add("hidden");
+
+        let recipeName = document.getElementById("id_name");
+        let recipeCookingTime = document.getElementById("id_cooking_time");
+        let recipeNameError = document.getElementById("recipe-name__error");
+        let recipeCookingTimeError = document.getElementById(
+            "recipe-cooking-time__error");
+
+        if (recipeName.value === "" ) {
+            recipeNameError.innerText = "Recipe name must be added.";
+        } else {
+            recipeNameError.innerText = "";
+        }
+
+        if (recipeCookingTime.value === "" ) {
+            recipeCookingTimeError.innerText = "Cooking time must be added.";
+        } else {
+            recipeCookingTimeError.innerText = "";
+        }
+
+        
+        if (createRecipeButton.innerText !== "Create recipe"){
+            createRecipeButton.innerText = "Create recipe";
+        }
+
+        if (recipeCookingTimeError.innerText === "" && 
+            recipeNameError.innerText === "") {
+            recipeForm.submit();
+        }
     }
 })

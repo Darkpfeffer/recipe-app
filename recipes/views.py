@@ -273,66 +273,24 @@ def create_recipe_view(request):
     rec_form = CreateRecipeForm(request.POST or None)
 
     if request.method == "POST":
-        new_ingredients = None
-
-        try:
-         new_ingredients = request.POST.get('ingredient_inputs').split("//, ")
-
-        except:
-            print("No new ingredients created")
-        
-        if new_ingredients:
-            for idIngredient, ingredient in enumerate(new_ingredients):
-                ingredient_attributes = ingredient.split(", ")
-                pic = request.FILES.get('pic' + str(idIngredient))
-
-                if not pic:
-                    pic = 'no_picture.jpg'
-
-                Ingredient.objects.create(
-                    name = ingredient_attributes[0],
-                    price = ingredient_attributes[1],
-                    ingredient_unit_type = ingredient_attributes[2],
-                    pic = pic
-                )
-
-            return redirect('recipes:create_recipe')
-        
-        else:
             user = User.objects.get(user_info__id = request.user.id)
 
             name = request.POST.get('name')
             cooking_time = request.POST.get('cooking_time')
-            ingredientIdList = request.POST.get('ingredient_presence').split(", ")
-            ingredients = []
             recipe_directions = request.POST.get('recipe_directions')
             creator = user
             pic = request.FILES.get('pic')
 
-
-
-            for ingrId in ingredientIdList:
-                ingr = Ingredient.objects.get(id = ingrId)
-
-                ingredients.append(ingr)
-
             if not pic:
                 pic = 'no_picture.jpg'
 
-            Recipe.objects.create(
+            created_recipe = Recipe.objects.create(
                 name = name,
                 cooking_time = cooking_time,
                 recipe_directions = recipe_directions,
                 creator = creator,
                 pic = pic
             )
-
-            created_recipe = Recipe.objects.get(name = name, creator = creator)
-
-            for ingr in ingredients:
-                created_recipe.ingredients.add(ingr)
-                ingr.recipe_appearance.add(created_recipe)
-                ingr.save()
 
             created_recipe.calculate_difficulty()
 
@@ -341,6 +299,35 @@ def create_recipe_view(request):
             user.created_recipes.add(created_recipe)
 
             user.save()
+
+            ingredients = request.POST.get('ingredient_name_inputs').split(", ")
+
+            for index, ingredient in enumerate(ingredients):
+                try: 
+                    add_ingredient = Ingredient.objects.get(name = ingredient)
+                    created_recipe.ingredients.add(add_ingredient)
+                    add_ingredient.recipe_appearance.add(created_recipe)
+                except:
+                    ingredient_name = request.POST.get('ingredient_name' + str(index))
+                    ingredient_price = request.POST.get('ingredient_price' + str(index))
+                    ingredient_unit_type = request.POST.get(
+                        'ingredient_unit_type' + str(index)
+                    )
+
+                    ingredient_picture = request.FILES.get('ngredient_pic' + str(index))
+
+                    if not ingredient_picture:
+                        ingredient_picture = 'no_picture.jpg'
+
+                    add_ingredient = Ingredient.objects.create(
+                        name = ingredient_name,
+                        price = ingredient_price,
+                        ingredient_unit_type = ingredient_unit_type,
+                        pic = ingredient_picture
+                    )
+
+                    add_ingredient.recipe_appearance.add(created_recipe)
+                    created_recipe.ingredients.add(add_ingredient)
 
             return redirect('recipes:recipe_success')
         
