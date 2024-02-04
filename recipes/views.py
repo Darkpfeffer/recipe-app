@@ -307,6 +307,7 @@ def create_recipe_view(request):
                     add_ingredient = Ingredient.objects.get(name = ingredient)
                     created_recipe.ingredients.add(add_ingredient)
                     add_ingredient.recipe_appearance.add(created_recipe)
+                    
                 except:
                     ingredient_name = request.POST.get('ingredient_name' + str(index))
                     ingredient_price = request.POST.get('ingredient_price' + str(index))

@@ -88,6 +88,7 @@
             {% if user.is_authenticated %}
                 <a href="{%url 'recipes:create_recipe' %}">Add a new recipe</a>
             {% endif %}
+            <input class="search-bar" onchange="getSearchedElement()">
             <div class="grid-container">
                         {% for object in object_list %}
                             <div class="grid-item">
@@ -96,7 +97,7 @@
                                     class="grid-title"
                                 >
                                     <img src="{{object.pic.url}}" class="recipe-image">
-                                    <p>{{object.name}}</p>
+                                    <p class="grid-name">{{object.name}}</p>
                                 </a>
                             </div>
                         {% endfor %}

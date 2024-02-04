@@ -221,7 +221,4 @@ checkboxButton.addEventListener('click', (event) => {
             removeIngredients.submit()
         }
     }
-
-    //removeIngredients.submit()
-
 })

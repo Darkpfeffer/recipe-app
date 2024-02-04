@@ -85,6 +85,7 @@
         </header>
         <div class="main__list">
             <h1>Ingredients</h1>
+            <input class="search-bar" onchange="getSearchedElement()">
             <div class="grid-container">
                 {% for object in object_list %}
                     <div class="grid-item">
@@ -93,7 +94,7 @@
                             class="grid-title"
                         >
                             <img src="{{object.pic.url}}" class="recipe-image">
-                            <p>{{object.name}}</p>
+                            <p class="grid-name">{{object.name}}</p>
                         </a>
                     </div>
                 {% endfor %}
