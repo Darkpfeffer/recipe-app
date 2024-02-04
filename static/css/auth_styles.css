@@ -18,6 +18,11 @@
     font-weight: 700;
 }
 
+.all-content form {
+    margin-top: 2em;
+    font-weight: 700;
+}
+
 .all-content a {
     margin-top: 0.8em;
     color: black;
