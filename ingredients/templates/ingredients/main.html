@@ -85,7 +85,10 @@
         </header>
         <div class="main__list">
             <h1>Ingredients</h1>
-            <input class="search-bar" onchange="getSearchedElement()">
+            <div class="searchbar-container">
+                <img src="/media/magnifying_glass.png" class="magnifying-glass">
+                <input class="searchbar" onchange="getSearchedElement()">
+            </div>
             <div class="grid-container">
                 {% for object in object_list %}
                     <div class="grid-item">

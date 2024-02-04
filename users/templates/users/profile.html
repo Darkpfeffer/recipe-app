@@ -1,18 +1,112 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        {% load static %}
+        <title>Success - Recipe App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" contect="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/media/favicon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'css/general_pages_settings.css' %}" type="text/css" rel="stylesheet">
+        <link href="{% static 'css/auth_styles.css' %}" type="text/css" rel="stylesheet">
+    </head>
     <body>
-        <p>{{object.user_info.username}}</p>
-        {% for created_recipe in object.created_recipes.all %}
-                <p>{{created_recipe.id}}</p>
-            {% endfor %}
-        {% if user.username == object.user_info.username %}
-            <p>{{object.user_info.email}}</p>
-            <a href="{{change_email_url}}">Change email address</a>
-            <a href="{% url 'users:edit_password'%}">Change password</a>
-            {% for favorite in object.favorite_recipes.all%}
-                <p>{{favorite}}</p>
-            {% endfor %}
-            <a href="{{object.id}}/delete/">Delete profile</a>
-        {% endif %}
+        <header>
+            <div class="header-content">
+                <div class="header__logo--name">
+                    <a href="{% url 'recipes:home' %}">
+                        <img 
+                            src="/media/app-icon.png" 
+                            rel="app icon" 
+                            class="header-icon"
+                        >
+                    </a>
+                    <a href="{% url 'recipes:home' %}">
+                        <h3>Recipe app</h3>
+                    </a>
+                </div>
+                <div class="desktop header-menu">
+                    <div class="header-menu__item">
+                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
+                    </div>
+                    <div class="header-menu__item">
+                        {% if user.is_authenticated %}
+                            <a href="{{profile_url}}">Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                        <img 
+                            src="/media/Diagram.png" 
+                            class="diagram"
+                        >
+                    </a>
+                </div>
+                <!-- mobile view -->
+                <div class="mobile header-mobile">
+                    <div id="myLinks">
+                        <a href="{% url 'recipes:recipe_list' %}">Recipes</a>
+                        <a href="{% url 'ingredients:ingredient_list' %}">Ingredients</a>
+                        {% if user.is_authenticated %}
+                            <a href="{{profile_url}}">Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                        <a href="{% url 'recipes:search' %}" class="header-menu__item">
+                            <img 
+                                src="/media/Diagram.png" 
+                                class="diagram"
+                            >
+                        </a>
+                    </div>
+                    <!-- Hamburger menu to toggle the navigation links -->
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </div>  
+        </header>
+        <div class="all-container">
+            <div class="all-content">
+                <p>Username: {{object.user_info.username}}</p>
+                <p>
+                    Created recipes:
+                    {% for created_recipe in object.created_recipes.all %}
+                        {% if forloop.last %}
+                            <span><a href="/recipes/list/{{created_recipe.id}}">{{created_recipe.name}}</a></span>
+                        {% else %}
+                            <span><a href="/recipes/list/{{created_recipe.id}}">{{created_recipe.name}}</a>, </span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                
+                <p>
+                    Favorite recipes:
+                    {% for favorite in object.favorite_recipes.all%}
+                        {% if forloop.last %}
+                            <span><a href="/recipes/list/{{favorite.id}}">{{favorite.name}}</a></span>
+                        {% else %}
+                            <span><a href="/recipes/list/{{favorite.id}}">{{favorite.name}}</a>, </span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+
+                {% if user.username == object.user_info.username %}
+                    <p>{{object.user_info.email}}</p>
+                    <a href="{{change_email_url}}" class="edit-link">Change email address</a>
+                    <a href="{% url 'users:edit_password'%}" class="edit-link">Change password</a>
+                    
+                    <a href="{{object.id}}/delete/" class="edit-link">Delete profile</a>
+                {% endif %}
+            </div>  
+        </div>
+        <script src="{% static 'js/general.js' %}"></script>   
     </body>
 </html>

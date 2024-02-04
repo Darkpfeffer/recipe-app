@@ -5,22 +5,54 @@
     align-items: center;
 }
 
-.homepage-search {
+.homepage-container {
     display: inherit;
     flex-direction: column;
     background-image: url("../../media/welcome_search_background.JPG");
     background-repeat: no-repeat;
-    background-size: 70vw 40vw;
-    height: 40vw;
-    width: 70vw;
+    background-size: 50em 29em;
+    height: 29em;
+    width: 50em;
     justify-content: center;
     align-items: center;
 }
 
+.homepage-container h2, .homepage-container h1 {
+    
+    background-color: rgba(255, 159, 148, 0.7);
+    border-radius: 7px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.homepage-container h1 {
+    margin-top: 0px;
+}
+
+.homepage-container h2 {
+    margin-bottom: 0px;
+}
+
 @media all and (min-width: 1920px) {
-    .homepage-search {
+    .homepage-container {
         background-size: 1440px 823px;
         height: 823px;
         width: 1440px;
+    }
+}
+
+@media all and (max-width: 840px) {
+    .homepage-container {
+        background-size: 38em 22em;
+        height: 22em;
+        width: 38em;
+    }
+}
+
+@media all and (max-width: 630px) {
+    .homepage-container {
+        background-size: 28em 16em;
+        height: 16em;
+        width: 28em;
     }
 }

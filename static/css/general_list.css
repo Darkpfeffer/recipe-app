@@ -10,6 +10,35 @@
     margin-right: auto;
 }
 
+.searchbar-container {
+    display: inherit;
+    border: 1px solid black;
+    padding: 0px;
+    float: right;
+    height: 1.5em;
+    width: 20em;
+    background-color: white;
+    margin-right: 1em;
+}
+
+.searchbar {
+    border: none;
+    height: auto;
+    width: 85%;
+    margin: 0;
+    margin-bottom: 0.5em;
+}
+
+.magnifying-glass {
+    width: 1em;
+    height: 1em;
+    margin: 0.3em;
+    margin-bottom: auto;
+    padding: 0;
+}
+
+
+
 /* Grid start */
 .grid-container {
     display: grid;
@@ -68,5 +97,16 @@
 @media all and (max-width: 750px) {
     .grid-container {
         grid-template-columns: 1fr;
+    }
+}
+
+@media all and (max-width: 480px) {
+    .searchbar {
+        height: 1em;
+        width: 85%;
+    }
+    
+    .searchbar-container {
+        width: 15em;
     }
 }

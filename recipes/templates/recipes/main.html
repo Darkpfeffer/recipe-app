@@ -88,7 +88,10 @@
             {% if user.is_authenticated %}
                 <a href="{%url 'recipes:create_recipe' %}">Add a new recipe</a>
             {% endif %}
-            <input class="search-bar" onchange="getSearchedElement()">
+            <div class="searchbar-container">
+                <img src="/media/magnifying_glass.png" class="magnifying-glass">
+                <input class="searchbar" onchange="getSearchedElement()">
+            </div>
             <div class="grid-container">
                         {% for object in object_list %}
                             <div class="grid-item">
