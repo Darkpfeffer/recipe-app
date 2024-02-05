@@ -10,7 +10,7 @@ DATABASES = {
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://recipe-app-1iwx.onrender.com']
 
 SESSION_COOKIE_SECURE = True
 
