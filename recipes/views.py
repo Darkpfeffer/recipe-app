@@ -333,7 +333,7 @@ def create_recipe_view(request):
                         'ingredient_unit_type' + str(index)
                     )
 
-                    ingredient_picture = request.FILES.get('ngredient_pic' + str(index))
+                    ingredient_picture = request.FILES.get('ingredient_pic' + str(index))
 
                     if not ingredient_picture:
                         ingredient_picture = 'no_picture.jpg'
