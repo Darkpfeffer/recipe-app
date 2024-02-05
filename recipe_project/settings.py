@@ -116,7 +116,7 @@ DATABASES = {
     }
 }
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://recipe-app-1iwx.onrender.com']
 
