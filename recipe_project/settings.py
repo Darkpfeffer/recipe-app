@@ -118,7 +118,7 @@ DATABASES = {
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['recipe-app-1iwx.onrender.com']
+ALLOWED_HOSTS = ['recipe-app-1iwx.onrender.com', '127.0.0.1', 'localhost']
 
 SESSION_COOKIE_SECURE = False
 
