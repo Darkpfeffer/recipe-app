@@ -118,7 +118,7 @@ DATABASES = {
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://recipe-app-1iwx.onrender.com']
+ALLOWED_HOSTS = ['https://recipe-app-1iwx.onrender.com', 'recipe-app-1iwx.onrender.com']
 
 SESSION_COOKIE_SECURE = False
 
