@@ -7,7 +7,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent#.parent
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -103,15 +103,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 #AUTH
 LOGIN_URL = '/login/'
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DATABASES = {
-	"default": {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-    }
+	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 DEBUG = False
