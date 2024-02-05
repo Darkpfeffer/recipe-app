@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-import dj_database_url
 import environ
 
 env = environ.Env()
@@ -100,7 +99,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 #AUTH
 LOGIN_URL = '/login/'
@@ -122,12 +121,16 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['recipe-app-1iwx.onrender.com', '127.0.0.1', 'localhost']
 
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 
 SECURE_HSTS_PRELOAD = False
+
+DEBUG_PROPAGATE_EXCEPTIONS = False
+
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
