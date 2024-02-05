@@ -1,5 +1,6 @@
 asgiref==3.7.2
 backports.zoneinfo;python_version<"3.9"
+Brotli==1.1.0
 contourpy==1.1.1
 cycler==0.12.1
 dj-database-url==2.1.0
