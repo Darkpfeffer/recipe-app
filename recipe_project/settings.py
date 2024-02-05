@@ -1,6 +1,10 @@
 from pathlib import Path
 import os
 import dj_database_url
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -99,10 +103,15 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 #AUTH
 LOGIN_URL = '/login/'
 
-SECRET_KEY = os.environ.get("SECRET_KEY_ENV")
+SECRET_KEY = env('SECRET_KEY')
 
 DATABASES = {
-	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+	"default": {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+    }
 }
 
 DEBUG = False
