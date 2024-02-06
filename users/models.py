@@ -6,6 +6,7 @@ class User(models.Model):
     user_info = models.OneToOneField(
         UserAuth,
         null = True,
+        blank = True,
         on_delete=models.CASCADE
     )
     favorite_recipes = models.ManyToManyField(

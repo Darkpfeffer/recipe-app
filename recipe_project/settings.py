@@ -127,7 +127,7 @@ DATABASES['default'] = dj_database_url.parse(
     conn_health_checks=True,
 )
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['recipe-app-1iwx.onrender.com', '127.0.0.1', 'localhost']
 
