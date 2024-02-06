@@ -57,7 +57,7 @@ def register_view(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data.get('password')
             email = form.cleaned_data.get('email')
-            profile_pic = form.cleaned_data.get('profile_pic')
+            profile_picture = form.cleaned_data.get('profile_pic')
 
            
 
@@ -70,7 +70,7 @@ def register_view(request):
                 if user is not None:
                     User.objects.create(
                         user_info = user,
-                        profile_pic = profile_pic
+                        profile_picture = profile_picture
                     )
 
                     return redirect('login')

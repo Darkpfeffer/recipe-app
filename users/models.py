@@ -5,6 +5,7 @@ from django.contrib.auth.models import User as UserAuth
 class User(models.Model):
     user_info = models.OneToOneField(
         UserAuth,
+        null = True,
         on_delete=models.CASCADE
     )
     favorite_recipes = models.ManyToManyField(
@@ -16,7 +17,7 @@ class User(models.Model):
         'recipes.Recipe',
         related_name="created_recipes",
         blank=True
-    ),
+    )
     profile_picture = models.ImageField(blank=True, default="no_picture.jpg", upload_to='users')
 
     def __str__(self):
