@@ -22,4 +22,4 @@ class User(models.Model):
     profile_picture = models.ImageField(blank=True, default="no_picture.jpg", upload_to='users')
 
     def __str__(self):
-        return f"Username: {self.user_info.username}, ID: {self.id}"
+        return f"Username: ID: {self.id}"
