@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 import environ
+import dj_database_url
+from google.oauth2 import service_account
 
 env = environ.Env()
 environ.Env.read_env()
@@ -19,6 +21,7 @@ INSTALLED_APPS = [
     'ingredients',
     'recipes',
     'users',
+    'images',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +90,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT= BASE_DIR / 'media'
 
 # Default primary key field type
@@ -99,7 +104,8 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage" #whitenoise.storage.CompressedStaticFilesStorage
+#whitenoise.storage.CompressedManifestStaticFilesStorage
 
 #AUTH
 LOGIN_URL = '/login/'
@@ -107,15 +113,19 @@ LOGIN_URL = '/login/'
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DATABASES = {
-	"default": {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("DATABASE_NAME"),
-        'USER': os.environ.get("DATABASE_USER"),
-        'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
-        'HOST': os.environ.get("DATABASE_HOST"),
-        'PORT': '5432'
-    }
 }
+
+DATABASES['default'] = dj_database_url.config(
+    default=os.environ.get("DATABASE_URL"),
+    conn_max_age=600,
+    conn_health_checks=True,
+)
+
+DATABASES['default'] = dj_database_url.parse(
+    os.environ.get("DATABASE_URL"),
+    conn_max_age=600,
+    conn_health_checks=True,
+)
 
 DEBUG = False
 
@@ -128,7 +138,7 @@ CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
-
+ 
 SECURE_HSTS_PRELOAD = False
 
 DEBUG_PROPAGATE_EXCEPTIONS = False

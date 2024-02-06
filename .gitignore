@@ -1,5 +1,7 @@
 /staticfiles
 
+credentials.json
+
 # Text backup files
 *.bak
 
