@@ -20,8 +20,7 @@ INSTALLED_APPS = [
     #Project apps
     'ingredients',
     'recipes',
-    'users',
-    'images',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -135,7 +134,7 @@ SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
  

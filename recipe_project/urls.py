@@ -28,8 +28,7 @@ urlpatterns = [
     path('login/', login_view, name = 'login'),
     path('logout/', logout_view, name = 'logout'),
     path('success/', success_view, name = 'success'),
-    path('register/', register_view, name = 'register'),
-    path('upload/', include('images.urls'))
+    path('register/', register_view, name = 'register')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
