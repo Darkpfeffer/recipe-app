@@ -101,7 +101,13 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage" #whitenoise.storage.CompressedStaticFilesStorage
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" #whitenoise.storage.CompressedStaticFilesStorage
 #whitenoise.storage.CompressedManifestStaticFilesStorage
 
 #AUTH
