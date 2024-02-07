@@ -6,7 +6,7 @@
         <title>Recipe List - Recipe App</title><meta charset="UTF-8">
         <meta charset="UTF-8">
         <meta name="viewport" contect="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="{{MEDIA_PREFIX}}favicon.png">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/app-icon.png'%}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
                 <div class="header__logo--name">
                     <a href="{% url 'recipes:home' %}">
                         <img 
-                            src="{{MEDIA_PREFIX}}app-icon.png" 
+                            src="{% static 'img/app-icon.png'%}" 
                             rel="app icon" 
                             class="header-icon"
                         >
@@ -49,7 +49,7 @@
                     </div>
                     <a href="{% url 'recipes:search' %}" class="header-menu__item">
                         <img 
-                            src="{{MEDIA_PREFIX}}Diagram.png" 
+                            src="{% static 'img/Diagram.png'%}" 
                             class="diagram"
                         >
                     </a>
@@ -72,7 +72,7 @@
                         {% endif %}
                         <a href="{% url 'recipes:search' %}" class="header-menu__item">
                             <img 
-                                src="{{MEDIA_PREFIX}}Diagram.png" 
+                                src="{% static 'img/Diagram.png'%}" 
                                 class="diagram"
                             >
                         </a>
@@ -90,7 +90,7 @@
                 <a href="{%url 'recipes:create_recipe' %}">Add a new recipe</a>
             {% endif %}
             <div class="searchbar-container">
-                <img src="{{MEDIA_PREFIX}}magnifying_glass.png" class="magnifying-glass">
+                <img src="{% static 'img/magnifying_glass.png'%}" class="magnifying-glass">
                 <input class="searchbar" onchange="getSearchedElement()">
             </div>
             <div class="grid-container">
@@ -112,19 +112,19 @@
                 <p class="footer-text">Find me on:</p>
                 <div>
                     <a href="https://github.com/Darkpfeffer" target="_blank" rel="Github link" class="footer-link">
-                        <img src="{{MEDIA_PREFIX}}github.svg" class="link-logo">
+                        <img src="{% static 'img/github.svg'%}" class="link-logo">
                     </a>
                     <a 
                         href="https://www.linkedin.com/in/zoltan-borsos/" target="_blank" 
                         rel="LinkedIn link" class="footer-link"
                     >
-                        <img src="{{MEDIA_PREFIX}}linkedin.svg" class="link-logo">
+                        <img src="{% static 'img/linkedin.svg'%}" class="link-logo">
                     </a>
                     <a 
                         href="https://darkpfeffer.github.io/portfolio-website/" target="_blank" 
                         rel="LinkedIn link" class="footer-link" id="portfolio-logo"
                     >
-                        <img src="{{MEDIA_PREFIX}}Portfolio-logo.svg" class="link-logo" >
+                        <img src="{% static 'img/Portfolio-logo.svg'%}" class="link-logo" >
                     </a>
                 </div>
             </div>
