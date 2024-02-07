@@ -1,8 +1,6 @@
 from pathlib import Path
 import os
 import environ
-import dj_database_url
-from google.oauth2 import service_account
 
 env = environ.Env()
 environ.Env.read_env()
@@ -118,12 +116,6 @@ DATABASES = {
     }
 }
 
-# Heroku: Update database configuration from $DATABASE_URL.
-
-DATABASES['default'] = dj_database_url.config(
-    conn_max_age=500
-)
-
 DEBUG = False
 
 ALLOWED_HOSTS = ['darkpfeffer-recipe-app-de79ad8bffee.herokuapp.com', '127.0.0.1', 'localhost']
@@ -141,3 +133,9 @@ SECURE_HSTS_PRELOAD = False
 DEBUG_PROPAGATE_EXCEPTIONS = False
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+
+# Heroku: Update database configuration from $DATABASE_URL.
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
