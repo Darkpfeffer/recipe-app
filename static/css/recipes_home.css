@@ -8,7 +8,7 @@
 .homepage-container {
     display: inherit;
     flex-direction: column;
-    background-image: url("../../media/welcome_search_background.JPG");
+    background-image: url("/static/img/welcome_search_background.JPG");
     background-repeat: no-repeat;
     background-size: 50em 29em;
     height: 29em;

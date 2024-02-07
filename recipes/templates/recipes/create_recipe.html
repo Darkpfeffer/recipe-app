@@ -5,7 +5,7 @@
         <title>Create recipe - Recipe App</title>
         <meta charset="UTF-8">
         <meta name="viewport" contect="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="/media/favicon.png">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png'%}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
                 <div class="header__logo--name">
                     <a href="{% url 'recipes:home' %}">
                         <img 
-                            src="/media/app-icon.png" 
+                            src="{% static 'img/app-icon.png'%}" 
                             rel="app icon" 
                             class="header-icon"
                         >
@@ -43,7 +43,7 @@
                     </div>
                     <a href="{% url 'recipes:search' %}" class="header-menu__item">
                         <img 
-                            src="/media/Diagram.png" 
+                            src="{% static 'img/Diagram.png'%}" 
                             class="diagram"
                         >
                     </a>
@@ -61,7 +61,7 @@
                         {% endif %}
                         <a href="{% url 'recipes:search' %}" class="header-menu__item">
                             <img 
-                                src="/media/Diagram.png" 
+                                src="{% static 'img/Diagram.png'%}" 
                                 class="diagram"
                             >
                         </a>
@@ -142,19 +142,19 @@
                 <p class="footer-text">Find me on:</p>
                 <div>
                     <a href="https://github.com/Darkpfeffer" target="_blank" rel="Github link" class="footer-link">
-                        <img src="/media/github.svg" class="link-logo">
+                        <img src="{% static 'img/github.svg'%}" class="link-logo">
                     </a>
                     <a 
                         href="https://www.linkedin.com/in/zoltan-borsos/" target="_blank" 
                         rel="LinkedIn link" class="footer-link"
                     >
-                        <img src="/media/linkedin.svg" class="link-logo">
+                        <img src="{% static 'img/linkedin.svg'%}" class="link-logo">
                     </a>
                     <a 
                         href="https://darkpfeffer.github.io/portfolio-website/" target="_blank" 
                         rel="LinkedIn link" class="footer-link" id="portfolio-logo"
                     >
-                        <img src="/media/Portfolio-logo.svg" class="link-logo" >
+                        <img src="{% static 'img/Portfolio-logo.svg'%}" class="link-logo" >
                     </a>
                 </div>
             </div>
