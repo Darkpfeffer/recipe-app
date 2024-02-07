@@ -12,7 +12,8 @@ class UserModelTest(TestCase):
         )
         
         test_user = User.objects.create(
-            user_info = user
+            user_info = user,
+            profile_picture = 'no_picture.jpg'
         )
 
         test_ingredient = Ingredient.objects.create(
@@ -55,9 +56,9 @@ class UserModelTest(TestCase):
 
         self.assertEqual(field_label, 'favorite recipes')
 
-    def test_user_profile_pic(self):
+    def test_user_profile_picture(self):
         user = User.objects.get(id = 1)
 
-        field_label = user._meta.get_field('profile_pic').verbose_name
+        field_label = user._meta.get_field('profile_picture').verbose_name
 
-        self.assertEqual(field_label, 'profile pic')
+        self.assertEqual(field_label, 'profile picture')
