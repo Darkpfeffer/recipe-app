@@ -112,6 +112,10 @@ LOGIN_URL = '/login/'
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", 'django-insecure-ml49cp(e)=yakpevh4xz)3w)6xuq6kv7g&3^xf^)gr-n3&p#%9')
 
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 DATABASES['default'] = dj_database_url.config(
