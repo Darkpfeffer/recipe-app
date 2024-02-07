@@ -120,7 +120,7 @@ DATABASES['default'] = dj_database_url.config(
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['recipe-app-1iwx.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['darkpfeffer-recipe-app-de79ad8bffee.herokuapp.com', '127.0.0.1', 'localhost']
 
 SESSION_COOKIE_SECURE = True
 
