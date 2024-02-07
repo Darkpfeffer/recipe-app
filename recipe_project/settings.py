@@ -109,21 +109,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage" #whiteno
 #AUTH
 LOGIN_URL = '/login/'
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", 'django-insecure-ml49cp(e)=yakpevh4xz)3w)6xuq6kv7g&3^xf^)gr-n3&p#%9')
 
 DATABASES = {
 }
 
 DATABASES['default'] = dj_database_url.config(
-    default=os.environ.get("DATABASE_URL"),
-    conn_max_age=600,
-    conn_health_checks=True,
-)
-
-DATABASES['default'] = dj_database_url.parse(
-    os.environ.get("DATABASE_URL"),
-    conn_max_age=600,
-    conn_health_checks=True,
+    conn_max_age=500
 )
 
 DEBUG = False
