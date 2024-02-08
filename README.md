@@ -36,4 +36,18 @@ The website is created and maintained by me. If you have any issues or need assi
 
 zoltan.borsos.kosi@gmail.com
 
+## Tools used
+
+Programming languages:
+Python
+JavaScript
+
+Framework:
+Django
+
+Hosting services:
+Heroku
+
+For packages, check the `requirements.txt` file.
+
 ## Thank you for reading through!
