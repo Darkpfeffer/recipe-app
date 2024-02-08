@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 import environ
-import cloudinary_storage.storage.MediaCloudinaryStorage
 
 env = environ.Env()
 environ.Env.read_env()
