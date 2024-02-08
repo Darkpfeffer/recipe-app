@@ -68,6 +68,10 @@
     flex-direction: column;
 }
 
+#last_detail {
+    padding-bottom: 2em;
+}
+
 @media all and (min-width: 1920px) {
     .all-details {
         width: 1440px;

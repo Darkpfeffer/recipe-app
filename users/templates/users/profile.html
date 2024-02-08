@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="{% static 'css/general_pages_settings.css' %}" type="text/css" rel="stylesheet">
-        <link href="{% static 'css/auth_styles.css' %}" type="text/css" rel="stylesheet">
+        <link href="{% static 'css/general_detail.css' %}" type="text/css" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -73,38 +73,50 @@
                 </div>
             </div>  
         </header>
-        <div class="all-container">
-            <div class="all-content">
-                <p>Username: {{object.user_info.username}}</p>
-                <p>
-                    Created recipes:
-                    {% for created_recipe in object.created_recipes.all %}
-                        {% if forloop.last %}
-                            <span><a href="/recipes/list/{{created_recipe.id}}">{{created_recipe.name}}</a></span>
-                        {% else %}
-                            <span><a href="/recipes/list/{{created_recipe.id}}">{{created_recipe.name}}</a>, </span>
-                        {% endif %}
-                    {% endfor %}
-                </p>
-                
-                <p>
-                    Favorite recipes:
-                    {% for favorite in object.favorite_recipes.all%}
-                        {% if forloop.last %}
-                            <span><a href="/recipes/list/{{favorite.id}}">{{favorite.name}}</a></span>
-                        {% else %}
-                            <span><a href="/recipes/list/{{favorite.id}}">{{favorite.name}}</a>, </span>
-                        {% endif %}
-                    {% endfor %}
-                </p>
-
-                {% if user.username == object.user_info.username %}
-                    <p>{{object.user_info.email}}</p>
-                    <a href="{{change_email_url}}" class="edit-link">Change email address</a>
-                    <a href="{% url 'users:edit_password'%}" class="edit-link">Change password</a>
+        <div class="all-details">
+            <div class="details ingredient-details">
+                    <h3 class="details__item">Profile: </h3>
+                    <img src="{{object.profile_picture.url}}" class="details__item details__pic">
+                    <p class="details__item">
+                        <span class="attribute-name">Username: </span>{{object.user_info.username}}
+                    </p>
+                    <p class="details__item">
+                        <span class="attribute-name">Created recipes:</span>
+                        {% for created_recipe in object.created_recipes.all %}
+                            {% if forloop.last %}
+                                <span><a href="/recipes/list/{{created_recipe.id}}">{{created_recipe.name}}</a></span>
+                            {% else %}
+                                <span><a href="/recipes/list/{{created_recipe.id}}">{{created_recipe.name}}</a>, </span>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
                     
-                    <a href="{{object.id}}/delete/" class="edit-link">Delete profile</a>
-                {% endif %}
+                    <p class="details__item">
+                        <span class="attribute-name">Favorite recipes:</span>
+                        {% for favorite in object.favorite_recipes.all%}
+                            {% if forloop.last %}
+                                <span><a href="/recipes/list/{{favorite.id}}">{{favorite.name}}</a></span>
+                            {% else %}
+                                <span><a href="/recipes/list/{{favorite.id}}">{{favorite.name}}</a>, </span>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+
+                    {% if user.username == object.user_info.username %}
+                        <p class="details__item">
+                            <span class="attribute-name">Email: </span>{{object.user_info.email}}
+                        </p>
+                        <a href="{{change_email_url}}" class="edit-link details__item recipe-presence">
+                            Change email address
+                        </a><br>
+                        <a href="{% url 'users:edit_password'%}" class="edit-link details__item recipe-presence">
+                            Change password
+                        </a><br>
+                        
+                        <a href="{{object.id}}/delete/" class="edit-link details__item recipe-presence">
+                            Delete profile
+                        </a>
+                    {% endif %}
             </div>  
         </div>
         <footer>
