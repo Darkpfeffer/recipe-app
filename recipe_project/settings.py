@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import environ
+import cloudinary_storage.storage.MediaCloudinaryStorage
 
 env = environ.Env()
 environ.Env.read_env()
@@ -15,6 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     #Project apps
     'ingredients',
     'recipes',
@@ -88,7 +91,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CLOUDINARY_STORAGE = {
+    os.environ.get('CLOUDINARY_URL')
+}
+
 MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_ROOT= BASE_DIR / 'media'
 
