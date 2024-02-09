@@ -55,7 +55,7 @@ class RecipeDetailView(DetailView):
 class UpdateRecipeView(LoginRequiredMixin, UpdateView):
     model = Recipe
     form = CreateRecipeForm
-    fields = ["name", "cooking_time", "recipe_directions", "pic"]
+    fields = ["name", "cooking_time", "recipe_directions"]
     template_name = 'recipes/update_recipe.html'
 
     def get_context_data(self, **kwargs):

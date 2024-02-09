@@ -21,7 +21,6 @@ class Ingredient(models.Model):
         'recipes.Recipe', 
         blank=True
     )
-    pic = models.ImageField(upload_to='ingredients', default='no_picture.jpg')
 
     def __str__(self):
         return f"id = {self.id}, name = {self.name}"

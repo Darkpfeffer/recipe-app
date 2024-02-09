@@ -111,11 +111,6 @@ searchButton.addEventListener("click", (event) => {
                         <option value="liter">Liter</option>
                         <option value="kilogram">Kilogram</option>
                     </select><br>
-                    <label for="ingredient_pic${i}">Picture: </label>
-                    <input 
-                        type="file" name="ingredient_pic${i}" ` +  
-                        `accept="image/*" id="ingredient_pic${i}"
-                    ><br>
                 </div>
                 `
             }
