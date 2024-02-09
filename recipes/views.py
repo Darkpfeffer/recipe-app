@@ -127,20 +127,12 @@ class UpdateRecipeIngredients(LoginRequiredMixin, View):
                     ingredient_unit_type = request.POST.get(
                         'ingredient_unit_type' + str(index)
                     )
-                    pic = request.FILES.get('ingredient_pic'+ str(index))
-
-                    print(pic)
-
-                    if not pic:
-                        pic = 'no_picture.jpg'
-                    
 
                     try:
                         add_ingredient = Ingredient.objects.create(
                             name = name,
                             price = price,
                             ingredient_unit_type = ingredient_unit_type,
-                            pic = pic
                         )
 
                         recipe.ingredients.add(add_ingredient)
@@ -297,17 +289,12 @@ def create_recipe_view(request):
             cooking_time = request.POST.get('cooking_time')
             recipe_directions = request.POST.get('recipe_directions')
             creator = user
-            pic = request.FILES.get('pic')
-
-            if not pic:
-                pic = 'no_picture.jpg'
 
             created_recipe = Recipe.objects.create(
                 name = name,
                 cooking_time = cooking_time,
                 recipe_directions = recipe_directions,
                 creator = creator,
-                pic = pic
             )
 
             created_recipe.calculate_difficulty()
@@ -333,16 +320,10 @@ def create_recipe_view(request):
                         'ingredient_unit_type' + str(index)
                     )
 
-                    ingredient_picture = request.FILES.get('ingredient_pic' + str(index))
-
-                    if not ingredient_picture:
-                        ingredient_picture = 'no_picture.jpg'
-
                     add_ingredient = Ingredient.objects.create(
                         name = ingredient_name,
                         price = ingredient_price,
                         ingredient_unit_type = ingredient_unit_type,
-                        pic = ingredient_picture
                     )
 
                     add_ingredient.recipe_appearance.add(created_recipe)
