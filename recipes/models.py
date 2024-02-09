@@ -24,7 +24,6 @@ class Recipe(models.Model):
         on_delete=models.PROTECT
     )
     recipe_directions = models.TextField(default="No directions added.")
-    pic = models.ImageField(upload_to='recipes')
 
     def __str__(self):
         return f"{self.name}, Difficulty: {self.difficulty}, "+\
