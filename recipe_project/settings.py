@@ -91,7 +91,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CLOUDINARY_STORAGE = {
-    os.environ.get('CLOUDINARY_URL')
+    os.getenv('CLOUDINARY_URL')
 }
 
 MEDIA_URL = '/media/'
@@ -115,11 +115,11 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage" #whiteno
 #AUTH
 LOGIN_URL = '/login/'
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DATABASES = {
     'default': {
-        os.environ.get('RENDER_DATABASE_URL')
+        os.getenv("RENDER_DATABASE_URL")
     }
 }
 
