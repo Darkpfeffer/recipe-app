@@ -91,7 +91,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CLOUDINARY_STORAGE = {
-    os.getenv('CLOUDINARY_URL')
+    os.environ.get('CLOUDINARY_URL')
 }
 
 MEDIA_URL = '/media/'
@@ -115,11 +115,12 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage" #whiteno
 #AUTH
 LOGIN_URL = '/login/'
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 DATABASES = {
     'default': {
-        os.getenv("RENDER_DATABASE_URL")
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -147,3 +148,5 @@ import dj_database_url
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+DATABASE_URL=os.environ.get("RENDER_DATABASE_URL")
