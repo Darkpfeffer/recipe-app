@@ -119,8 +119,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        os.environ.get('RENDER_DATABASE_URL')
     }
 }
 
